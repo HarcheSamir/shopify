@@ -1,0 +1,640 @@
+{
+    "sections": {
+        "slideshow_kYdCz6": {
+            "type": "slideshow",
+            "blocks": {
+                "slide_qFKRwn": {
+                    "type": "slide",
+                    "settings": {
+                        "image": "shopify://shop_images/photo-1616683693504-3ea7e9ad6fec_cb13becf-929e-4108-bd9a-209781493aa4.jpg",
+                        "caption": "Lumin",
+                        "block_cap_size": 20,
+                        "cap_color": "#7069bc",
+                        "heading": "Radiance Redefined",
+                        "block_head_size-2": 50,
+                        "block_head_size-mobile": 26,
+                        "block_head_line": 1.4,
+                        "heading_size": "h1",
+                        "subheading": "Hydration meets Luxury.",
+                        "button_label": "Shop The Sale",
+                        "link": "shopify://collections/all",
+                        "link-2": "",
+                        "button_style_secondary": false,
+                        "box_align": "middle-left",
+                        "show_text_box": false,
+                        "text_alignment": "left",
+                        "image_overlay_opacity": 0,
+                        "color_scheme": "",
+                        "text_alignment_mobile": "center",
+                        "mobile_box_align": "flex-end",
+                        "mobile_text_spacing": 0
+                    }
+                }
+            },
+            "block_order": [
+                "slide_qFKRwn"
+            ],
+            "settings": {
+                "layout": "full_bleed",
+                "banner_border": 0,
+                "slide_height": "adapt_image",
+                "slider_visual": "counter",
+                "auto_rotate": false,
+                "hide_navigation": false,
+                "change_slides_speed": 5,
+                "show_text_below": false,
+                "accessibility_info": "Slideshow about our brand"
+            }
+        },
+        "9d5bf8e8-7f0a-4b0f-8b9c-3bcc507f8d1e": {
+            "type": "brands",
+            "blocks": {
+                "e70f88b5-d52b-49b1-977f-2605179cbce5": {
+                    "type": "image",
+                    "settings": {
+                        "logo_image_width": 100
+                    }
+                },
+                "b144b07a-c72d-40ee-954f-2d83a707ac98": {
+                    "type": "image",
+                    "settings": {
+                        "logo_image_width": 98
+                    }
+                },
+                "87140f6c-1fb6-4ada-be62-2d53c3049b22": {
+                    "type": "image",
+                    "settings": {
+                        "logo_image_width": 94
+                    }
+                },
+                "8c4cd83d-00b1-448b-acc2-c8bcac4a288a": {
+                    "type": "image",
+                    "settings": {
+                        "logo_image_width": 96
+                    }
+                },
+                "7a0f4495-4a47-4bc7-be7a-4969c60db806": {
+                    "type": "image",
+                    "settings": {
+                        "logo_image_width": 100
+                    }
+                }
+            },
+            "block_order": [
+                "e70f88b5-d52b-49b1-977f-2605179cbce5",
+                "b144b07a-c72d-40ee-954f-2d83a707ac98",
+                "87140f6c-1fb6-4ada-be62-2d53c3049b22",
+                "8c4cd83d-00b1-448b-acc2-c8bcac4a288a",
+                "7a0f4495-4a47-4bc7-be7a-4969c60db806"
+            ],
+            "settings": {
+                "scroll_speed": 100,
+                "fade": false,
+                "color_scheme": "background-1",
+                "padding_desktop": 4,
+                "padding_mobile": 4,
+                "padding_item_desktop": 36,
+                "padding_item_mobile": 24,
+                "padding_top": 12,
+                "padding_bottom": 24
+            }
+        },
+        "lumin_pro_7ChmDy": {
+            "type": "lumin-pro",
+            "blocks": {
+                "feature_text_eUd9N4": {
+                    "type": "feature-text",
+                    "settings": {
+                        "text": "EXCELLENT <strong>4.8/5 </strong> <em>★★★★★</em> ",
+                        "font_size": 14,
+                        "text_bg": "#eeecff",
+                        "italic_text": "#ffa600",
+                        "bold_text": "#7069bc",
+                        "border": "#7069bc"
+                    }
+                },
+                "heading_tP9hhg": {
+                    "type": "heading",
+                    "settings": {
+                        "heading": "NEW_PRODUCT_HEADING_1_CONTENT",
+                        "heading_size": "h1"
+                    }
+                },
+                "text_hLB8DN": {
+                    "type": "text",
+                    "settings": {
+                        "text": "<p>Our formula uses organic rose extracts to soothe and revitalize dry skin.</p>",
+                        "text_style": "body"
+                    }
+                },
+                "button_93gayM": {
+                    "type": "button",
+                    "settings": {
+                        "button_label": "GET THIS OFFER NOW",
+                        "button_link": "shopify://collections/all",
+                        "button_style_secondary": false
+                    }
+                },
+                "testimonial_images_3Atwk3": {
+                    "type": "testimonial-images",
+                    "settings": {
+                        "image_size": 1,
+                        "image_space": -14,
+                        "hide_img_2": false,
+                        "hide_img_3": false,
+                        "hide_img_4": false,
+                        "hide_img_5": false,
+                        "text": "<p><strong>4.9/5 Rated by 13567+<br/>Customers</strong></p>",
+                        "text_size": 13,
+                        "text_style": "body"
+                    }
+                }
+            },
+            "block_order": [
+                "feature_text_eUd9N4",
+                "heading_tP9hhg",
+                "text_hLB8DN",
+                "button_93gayM",
+                "testimonial_images_3Atwk3"
+            ],
+            "settings": {
+                "color_scheme_main": "scheme-15ab6c1a-5144-4b7d-a402-482fa31b8c04",
+                "image": "shopify://shop_images/photo-1620916566398-39f1143ab7be_655c5f5b-2174-4bdb-a46b-679f1b36ad38.jpg",
+                "full-width": false,
+                "height": "medium",
+                "desktop_image_width": "medium",
+                "layout": "text_first",
+                "desktop_content_position": "middle",
+                "desktop_content_alignment": "left",
+                "image_behavior": "none",
+                "mobile_content_alignment": "left",
+                "margin_top": 0,
+                "margin_bottom": 36,
+                "padding_top": 52,
+                "padding_bottom": 36
+            }
+        },
+        "b390ecbd-0a93-415a-8067-764192de1929": {
+            "type": "lumin-grids",
+            "settings": {
+                "video_border": 0,
+                "zoom_hover": true,
+                "loading_color": "#f2f2f2",
+                "grid_gap": 8,
+                "color_scheme": "",
+                "padding_top": 36,
+                "padding_bottom": 0,
+                "margin_top": 36,
+                "margin_bottom": 0
+            }
+        },
+        "featured_product_cLrz7N": {
+            "type": "featured-product",
+            "blocks": {
+                "text_8qXfw8": {
+                    "type": "text",
+                    "settings": {
+                        "text": "{{ section.settings.product.vendor }}",
+                        "text_style": "uppercase"
+                    }
+                },
+                "price_WfXqbN": {
+                    "type": "price",
+                    "settings": {
+                        "price_style": "price",
+                        "price_size_2": 1,
+                        "badge_size": 14,
+                        "sale_price_color": "#131313",
+                        "badge_price": "#8b8d8f",
+                        "badge_bg": "#f2f2f2",
+                        "badge_border": "#f2f2f2",
+                        "price_bold": false,
+                        "price_bold_2": false,
+                        "badge_hide": false,
+                        "taxes_hide": false,
+                        "shipping_hide": false,
+                        "padding_top": 4,
+                        "padding_bottom": 4
+                    }
+                },
+                "title_FXQaYz": {
+                    "type": "title",
+                    "settings": {
+                        "heading_size": "h1"
+                    }
+                },
+                "variant_picker_LU4aaD": {
+                    "type": "variant_picker",
+                    "settings": {
+                        "picker_type": "button",
+                        "swatchType": "color",
+                        "optionName": "Color",
+                        "swatchStyle": "round",
+                        "swatchSize": 30,
+                        "swatchHeight": 30
+                    }
+                },
+                "quantity_selector_CfPdjR": {
+                    "type": "quantity_selector",
+                    "settings": {}
+                },
+                "buy_buttons_6f9Ywz": {
+                    "type": "buy_buttons",
+                    "settings": {
+                        "show_dynamic_checkout": true,
+                        "show_gift_card_recipient": true
+                    }
+                },
+                "share_HUkxMX": {
+                    "type": "share",
+                    "settings": {
+                        "share_label": "HOME_SHARE_LABEL_CONTENT"
+                    }
+                }
+            },
+            "block_order": [
+                "text_8qXfw8",
+                "price_WfXqbN",
+                "title_FXQaYz",
+                "variant_picker_LU4aaD",
+                "quantity_selector_CfPdjR",
+                "buy_buttons_6f9Ywz",
+                "share_HUkxMX"
+            ],
+            "name": "t:sections.featured-product.presets.name",
+            "settings": {
+                "product": "face-cream-18",
+                "color_scheme": "background-1",
+                "secondary_background": false,
+                "media_size": "medium",
+                "constrain_to_viewport": true,
+                "media_fit": "cover",
+                "media_position": "left",
+                "desktop_content_position": "middle",
+                "desktop_content_alignment": "left",
+                "image_zoom": "lightbox",
+                "hide_variants": false,
+                "enable_video_looping": false,
+                "padding_top": 36,
+                "padding_bottom": 36
+            }
+        },
+        "1b0faa36-b588-4d85-97c5-48f2ef436ebf": {
+            "type": "lumin-grids",
+            "blocks": {
+                "45ba44b3-2512-47a0-8bce-dd7c7d962b7e": {
+                    "type": "image",
+                    "settings": {
+                        "large_up_hide": false,
+                        "grid_width_desktop": "33",
+                        "medium_hide": false,
+                        "grid_width_tablet": "33.3333333",
+                        "small_hide": false,
+                        "image": "shopify://shop_images/photo-1556228578-8c89e6adf883_31e49549-525e-43b6-90a1-56ee6c58db07.jpg",
+                        "overlay_opacity": 0,
+                        "opacity_color": "#000000",
+                        "opacity_color_full": false,
+                        "padding_size": 5,
+                        "padding_size_in": 5,
+                        "text_border": 0,
+                        "bg_color": "rgba(0,0,0,0)",
+                        "head": "",
+                        "head_color": "#ffffff",
+                        "head_size_d": 30,
+                        "head_size_m": 24,
+                        "margin_bottom": 15,
+                        "text": "",
+                        "text_color": "#ffffff",
+                        "text_size_d": 16,
+                        "text_size_m": 14,
+                        "button-text": "button",
+                        "button_link": "",
+                        "desktop_content_alignment": "left",
+                        "image_content_position": "bottom-left",
+                        "grid-url": ""
+                    }
+                },
+                "74817858-dc12-4489-a021-202762b23a32": {
+                    "type": "text",
+                    "settings": {
+                        "large_up_hide": false,
+                        "grid_width_desktop": "33",
+                        "medium_hide": false,
+                        "grid_width_tablet": "33",
+                        "small_hide": false,
+                        "image": "NEW_THEME_PRODUCT_SHOWCASE_IMAGE_1",
+                        "show_border": false,
+                        "border_color": "#eeeeee",
+                        "padding_size": 5,
+                        "padding_size_mobile": 5,
+                        "padding_left_mobile": 5,
+                        "text_border": 0,
+                        "bg_color": "#f6f6f6",
+                        "icon_size": 25,
+                        "icon_corner": 0,
+                        "head": "Experience the ultimate hydration with our premium Rose Face Cream.",
+                        "use_body_font": false,
+                        "head_color": "#212121",
+                        "head_size_d": 30,
+                        "head_size_m": 24,
+                        "margin_bottom": 15,
+                        "subtitle": "",
+                        "text_color": "#212121",
+                        "text_size_d": 16,
+                        "text_size_m": 14,
+                        "button-text": "View Collection",
+                        "show_secondary": false,
+                        "button_link": "shopify://collections/teeth",
+                        "image_content_position": "middle-center",
+                        "desktop_content_alignment": "left",
+                        "grid-url": ""
+                    }
+                },
+                "37001da9-3095-421e-97c1-fea1b1dd71bb": {
+                    "type": "image",
+                    "settings": {
+                        "large_up_hide": false,
+                        "grid_width_desktop": "33",
+                        "medium_hide": false,
+                        "grid_width_tablet": "33",
+                        "small_hide": false,
+                        "image": "shopify://shop_images/photo-1599305090598-fe179d501227_38159408-e8c5-410c-ab10-e22bd06040dd.jpg",
+                        "overlay_opacity": 0,
+                        "opacity_color": "#000000",
+                        "opacity_color_full": false,
+                        "padding_size": 5,
+                        "padding_size_in": 5,
+                        "text_border": 0,
+                        "bg_color": "rgba(0,0,0,0)",
+                        "head": "",
+                        "head_color": "#ffffff",
+                        "head_size_d": 24,
+                        "head_size_m": 20,
+                        "margin_bottom": 15,
+                        "text": "",
+                        "text_color": "#212121",
+                        "text_size_d": 16,
+                        "text_size_m": 14,
+                        "button-text": "button",
+                        "button_link": "",
+                        "desktop_content_alignment": "left",
+                        "image_content_position": "bottom-left",
+                        "grid-url": ""
+                    }
+                }
+            },
+            "block_order": [
+                "45ba44b3-2512-47a0-8bce-dd7c7d962b7e",
+                "74817858-dc12-4489-a021-202762b23a32",
+                "37001da9-3095-421e-97c1-fea1b1dd71bb"
+            ],
+            "settings": {
+                "video_border": 8,
+                "zoom_hover": true,
+                "loading_color": "#f2f2f2",
+                "grid_gap": 18,
+                "color_scheme": "",
+                "padding_top": 36,
+                "padding_bottom": 36,
+                "margin_top": 36,
+                "margin_bottom": 40
+            }
+        },
+        "video_with_text_9HWiaH": {
+            "type": "video-with-text",
+            "settings": {
+                "layout": "full_bleed",
+                "video_border": 0,
+                "video": "NEW_THEME_PRODUCT_VIDEO",
+                "video_height": "medium",
+                "image_overlay_opacity": 0,
+                "desktop_content_position": "middle-center",
+                "show_text_box": false,
+                "video_content_border": 0,
+                "mobile_content_position": "middle",
+                "color_scheme": "background-2",
+                "desktop_content_alignment": "left",
+                "heading": "",
+                "heading_size": "h1",
+                "text": "",
+                "button_label_1": "",
+                "button_link_1": "",
+                "button_style_secondary_1": false,
+                "padding_top": 36,
+                "padding_bottom": 36
+            }
+        },
+        "c18aac23-6734-44b2-9bac-a12c89451461": {
+            "type": "rich-text",
+            "blocks": {
+                "template--20863348703538__c18aac23-6734-44b2-9bac-a12c89451461-heading-1": {
+                    "type": "heading",
+                    "settings": {
+                        "heading": "Loved by Thousands",
+                        "heading_size": "h1"
+                    }
+                },
+
+                "template--20863348703538__c18aac23-6734-44b2-9bac-a12c89451461-button-1": {
+                    "type": "button",
+                    "disabled": true,
+                    "settings": {
+                        "button_label": "Button label",
+                        "button_link": "",
+                        "button_style_secondary": false,
+                        "button_label_2": "",
+                        "button_link_2": "",
+                        "button_style_secondary_2": false
+                    }
+                }
+            },
+            "block_order": [
+                "template--20863348703538__c18aac23-6734-44b2-9bac-a12c89451461-heading-1",
+                "template--20863348703538__c18aac23-6734-44b2-9bac-a12c89451461-button-1"
+            ],
+            "settings": {
+                "desktop_content_position": "center",
+                "content_alignment": "center",
+                "color_scheme": "accent-2",
+                "full_width": true,
+                "padding_top": 68,
+                "padding_bottom": 0
+            }
+        },
+        "bf186cde-72f3-4dc5-a0f4-8364db7d2e39": {
+            "type": "multicolumn",
+            "blocks": {
+                "review_column_bf510581": {
+                    "type": "column",
+                    "settings": {
+                        "title": "★★★★★",
+                        "text": "Best cream ever.",
+                        "link_label": "",
+                        "link": ""
+                    }
+                },
+                "review_column_3ad21238": {
+                    "type": "column",
+                    "settings": {
+                        "title": "★★★★★",
+                        "text": "Incredible feel.",
+                        "link_label": "",
+                        "link": ""
+                    }
+                },
+                "review_column_32364f54": {
+                    "type": "column",
+                    "settings": {
+                        "title": "★★★★☆",
+                        "text": "Smells lovely.",
+                        "link_label": "",
+                        "link": ""
+                    }
+                },
+                "review_column_db502d36": {
+                    "type": "column",
+                    "settings": {
+                        "title": "★★★★★",
+                        "text": "Buying again.",
+                        "link_label": "",
+                        "link": ""
+                    }
+                }
+            },
+            "block_order": [
+                "review_column_bf510581",
+                "review_column_3ad21238",
+                "review_column_32364f54",
+                "review_column_db502d36"
+            ],
+            "settings": {
+                "title": "",
+                "heading_size": "h1",
+                "heading_center": "left",
+                "image_width": "third",
+                "image_ratio": "circle",
+                "columns_desktop": 4,
+                "column_alignment": "center",
+                "background_style": "primary",
+                "button_label": "",
+                "button_link": "",
+                "color_scheme": "accent-2",
+                "columns_mobile": "1",
+                "swipe_on_mobile": true,
+                "navigation_on_mobile": false,
+                "padding_top": 36,
+                "padding_bottom": 80
+            }
+        },
+
+
+        "cdecd907-21d4-43b6-9a53-e009e5c178e8": {
+            "type": "slideshow",
+            "blocks": {
+                "template--19498122641738__cdecd907-21d4-43b6-9a53-e009e5c178e8-slide-1": {
+                    "type": "slide",
+                    "settings": {
+                        "caption": "",
+                        "image": "shopify://shop_images/photo-1616683693504-3ea7e9ad6fec_cb13becf-929e-4108-bd9a-209781493aa4.jpg",
+                        "block_cap_size": 20,
+                        "cap_color": "#222222",
+                        "heading": "Need Assistance?",
+                        "block_head_size-2": 40,
+                        "block_head_size-mobile": 30,
+                        "block_head_line": 1.4,
+                        "heading_size": "h0",
+                        "subheading": "Our expert team is available 24/7.",
+                        "button_label": "CONTACT US",
+                        "link": "shopify://pages/contact",
+                        "link-2": "",
+                        "button_style_secondary": false,
+                        "box_align": "middle-left",
+                        "show_text_box": true,
+                        "text_alignment": "left",
+                        "image_overlay_opacity": 0,
+                        "color_scheme": "accent-2",
+                        "text_alignment_mobile": "center",
+                        "mobile_box_align": "center",
+                        "mobile_text_spacing": 0
+                    }
+                }
+            },
+            "block_order": [
+                "template--19498122641738__cdecd907-21d4-43b6-9a53-e009e5c178e8-slide-1"
+            ],
+            "settings": {
+                "layout": "grid",
+                "banner_border": 0,
+                "slide_height": "small",
+                "slider_visual": "counter",
+                "auto_rotate": false,
+                "hide_navigation": false,
+                "change_slides_speed": 5,
+                "show_text_below": false,
+                "accessibility_info": "Slideshow about our brand"
+            }
+        },
+        "ea08ed87-464c-4738-8c61-5a06581e3730": {
+            "type": "custom-fonts",
+            "blocks": {
+                "33bcefd1-daf8-4048-846f-f5ddfb8a477f": {
+                    "type": "image",
+                    "settings": {
+                        "name": "Giloy",
+                        "custom_font_weight": "400",
+                        "custom_font_style": "none",
+                        "custom_font_url": "https://cdn.shopify.com/s/files/1/0839/0370/9486/files/Gilroy-Regular.ttf?v=1697134312",
+                        "apply_h1": false,
+                        "apply_h2": false,
+                        "apply_h3": false,
+                        "apply_h4": false,
+                        "apply_h5": false,
+                        "apply_h6": false,
+                        "apply_span": true,
+                        "apply_p": true,
+                        "apply_custom": ""
+                    }
+                },
+                "39c4ec2b-b5ba-4f8b-9a05-2172d5dafe2f": {
+                    "type": "image",
+                    "settings": {
+                        "name": "Gothem",
+                        "custom_font_weight": "500",
+                        "custom_font_style": "normal",
+                        "custom_font_url": "https://cdn.shopify.com/s/files/1/0839/0370/9486/files/GothamMedium.ttf?v=1697134401",
+                        "apply_h1": true,
+                        "apply_h2": true,
+                        "apply_h3": true,
+                        "apply_h4": true,
+                        "apply_h5": true,
+                        "apply_h6": true,
+                        "apply_span": false,
+                        "apply_p": false,
+                        "apply_custom": ""
+                    }
+                }
+            },
+            "block_order": [
+                "33bcefd1-daf8-4048-846f-f5ddfb8a477f",
+                "39c4ec2b-b5ba-4f8b-9a05-2172d5dafe2f"
+            ],
+            "disabled": true,
+            "settings": {
+                "enable": true
+            }
+        }
+    },
+    "order": [
+        "slideshow_kYdCz6",
+        "9d5bf8e8-7f0a-4b0f-8b9c-3bcc507f8d1e",
+        "lumin_pro_7ChmDy",
+        "b390ecbd-0a93-415a-8067-764192de1929",
+        "featured_product_cLrz7N",
+        "1b0faa36-b588-4d85-97c5-48f2ef436ebf",
+        "video_with_text_9HWiaH",
+        "c18aac23-6734-44b2-9bac-a12c89451461",
+        "bf186cde-72f3-4dc5-a0f4-8364db7d2e39",
+        "cdecd907-21d4-43b6-9a53-e009e5c178e8",
+        "ea08ed87-464c-4738-8c61-5a06581e3730"
+    ]
+}

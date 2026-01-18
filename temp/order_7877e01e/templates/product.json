@@ -1,0 +1,570 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "2fead2d5-7a3f-49d9-bacf-1d813be9861e": {
+          "type": "review",
+          "settings": {
+            "lrw_text": "4.8 - 1356 Reviews",
+            "text_size": 14,
+            "star_style": "star",
+            "star_size": 0.8,
+            "star_rating": 4.5,
+            "lrw_star_color": "#7069bc",
+            "lrw_star_color_disable": "#eeeeee",
+            "lrw_color": "#2e2a39",
+            "margin_top": 8,
+            "margin_bottom": -9
+          }
+        },
+        "text_benefits_yzGqjt": {
+          "type": "text_benefits",
+          "disabled": true,
+          "settings": {
+            "benefits": "<h2>Say Goodbye to Stains! Discover Our Teeth Whitening Toothpaste</h2>"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "title_size": 28,
+            "title_height": 120,
+            "text_transform": "none"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "price_style": "price",
+            "price_size": 20,
+            "badge_text_1": 10,
+            "price_first": false,
+            "badge_bg_1": "#e3fd3e",
+            "badge_price_1": "#000000",
+            "price_size_2": 1,
+            "badge_price": "#8b8d8f",
+            "price_bold_2": false,
+            "sale_price_color": "#7069bc",
+            "regular_price_color": "#212121",
+            "price_bold": true,
+            "badge_hide": false,
+            "taxes_hide": true,
+            "shipping_hide": false,
+            "padding_top": 4,
+            "padding_bottom": 4
+          }
+        },
+        "review_v1_RYwWnj": {
+          "type": "review_v1",
+          "settings": {
+            "name": "Michelle",
+            "text": "and 758 people purchased",
+            "background_review": "#eeecff",
+            "text_color": "#000000",
+            "verified_badge": "#1c9cef",
+            "border_color": "#7069bc",
+            "border_style": "dashed",
+            "border_size": 0.2,
+            "font_size": 12,
+            "padding_top": 5,
+            "padding_bottom": 15
+          }
+        },
+        "text_benefits_JqDfxt": {
+          "type": "text_benefits",
+          "settings": {
+            "benefits": "<p>🚚 Free shipping<br/>🗓️ 30-Day-Guarantee</p>"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "label_style": "body",
+            "font_size": 14,
+            "font_style": "normal",
+            "swatchType": "color",
+            "optionName": "Color",
+            "swatchStyle": "round",
+            "swatchSize": 28,
+            "swatchHeight": 30,
+            "size_trigger": "",
+            "chart_id": "Size Chart",
+            "size_page": "",
+            "size_icon": "hanger",
+            "spaced_size": false
+          }
+        },
+
+        "7105577f-93d1-4b1b-9580-5c13e73776c2": {
+          "type": "inventory",
+          "settings": {
+            "text_style": "uppercase",
+            "bar_font_size": 11,
+            "inventory_threshold": 9,
+            "show_inventory_bar": true,
+            "show_inventory_pill": true,
+            "text_soldout": "PRODUCT_SOLDOUT_TEXT",
+            "text_untracked": "PRODUCT_UNTRACKED_TEXT",
+            "text_low_one": "PRODUCT_LOW_ONE_TEXT",
+            "text_low_many": "PRODUCT_LOW_MANY_TEXT",
+            "text_normal": "PRODUCT_NORMAL_TEXT",
+            "inv_bar_height": 8,
+            "inv_bar_radius": 24,
+            "inv_bar_width_normal": 70,
+            "inv_bar_width_low": 15,
+            "inv_bar_width_untrack": 50,
+            "inv_bar_width_sold": 0,
+            "normal_pill_color": "#7069bc",
+            "normal_color": "#7069bc",
+            "normal_color_2": "#7069bc",
+            "low_pill_color": "#ff0505",
+            "low_color": "#d50000",
+            "low_color_2": "#d50000",
+            "untrack_pill_color": "#0da73f",
+            "untrack_background_bar": "#0da73f",
+            "sold_pill_color": "#c8c8c8",
+            "background_bar": "#e9ecef"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_full_button": true,
+            "cart_btn_height": 5.6,
+            "cart_btn_font": 20,
+            "lm_main_button": "#6e65bc",
+            "lm_main_button_gr": "",
+            "lm_main_text": "#ffffff",
+            "lm_button_animation": "soft",
+            "show_gift_card_recipient": true,
+            "skip_cart": false
+          }
+        },
+        "promo_B9WFeV": {
+          "type": "promo",
+          "settings": {
+            "icon": "truck",
+            "icon_width": 20,
+            "content": "<p><strong>NEW_FREE_SHIPPING_CONTENT_ST</strong></p>",
+            "font_size": 100
+          }
+        },
+        "promo_9nPByD": {
+          "type": "promo",
+          "settings": {
+            "icon": "return",
+            "icon_width": 20,
+            "content": "<p><strong>30-Day Guarantee</strong></p>",
+            "font_size": 100
+          }
+        },
+        "promo_QdGPym": {
+          "type": "promo",
+          "disabled": true,
+          "settings": {
+            "icon": "chat_bubble",
+            "icon_width": 20,
+            "content": "<p>24/7 Customer Support</p>",
+            "font_size": 100
+          }
+        },
+        "promo_W3Rmdw": {
+          "type": "promo",
+          "disabled": true,
+          "settings": {
+            "icon": "leaf",
+            "icon_width": 20,
+            "content": "<p>100% Satisfaction Guaranteed</p>",
+            "font_size": 100
+          }
+        },
+        "6be49df1-2de0-49c6-9f17-baef396c43c2": {
+          "type": "shipping",
+          "settings": {
+            "ship_days": 4,
+            "cut_off_time": 12,
+            "icon_size": 15,
+            "image_ani": "heartBeat",
+            "text_size": 12,
+            "text_style": "subtitle",
+            "text": "<strong>NEW_WANT_IT_BY_CONTENT (date)? NEW_ORDER_WITHIN_CONTENT [(timer)]</strong>",
+            "date_locale": "en-US",
+            "ship_bg": "#ffffff",
+            "show_border": false,
+            "ship_border": "#d2cef6",
+            "border_radius": 0,
+            "padding_top": 4,
+            "padding_bottom": 0,
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "text_DWTEek": {
+          "type": "text",
+          "settings": {
+            "text": "Safe & Secure payments",
+            "text_style": "uppercase"
+          }
+        },
+        "payment_DHPmL3": {
+          "type": "payment",
+          "settings": {
+            "original": "custom",
+            "payment_icon": "visa,master,paypal,apple_pay,shopify-pay,google-pay",
+            "payment_content_alignment": "left",
+            "custom_icon_1_width": 34,
+            "custom_icon_2_width": 34,
+            "custom_icon_3_width": 34
+          }
+        },
+
+        "ad4a2bc2-8dd2-4105-9923-5bd7d66f77f3": {
+          "type": "icon-with-text",
+          "settings": {
+            "layout": "vertical",
+            "color_scheme": "",
+            "icon_font_size": 14,
+            "icon_1": "box",
+            "heading_1": "FREE SHIPPING GLOBALLY",
+            "icon_2": "return",
+            "heading_2": "TRY IT RISK-FREE",
+            "icon_3": "star",
+            "heading_3": "FDA CLEARED"
+          }
+        },
+        "eb02bfdc-836f-40fa-bc36-a93ccbb6f998": {
+          "type": "collapsible_tab",
+          "settings": {
+            "open_first_collapsible_row": false,
+            "heading": "NEW_CUSTOMER_SERVICE_TEXT_CONTENT",
+            "icon": "none",
+            "content": "<p>NEW_CUSTOMER_SERVICE_PARAGRAPH_CONTENT</p>",
+            "page": ""
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "PRODUCT_SHARE_LABEL"
+          }
+        }
+      },
+      "block_order": [
+        "2fead2d5-7a3f-49d9-bacf-1d813be9861e",
+        "text_benefits_yzGqjt",
+        "title",
+        "price",
+        "review_v1_RYwWnj",
+        "text_benefits_JqDfxt",
+        "variant_picker",
+        "7105577f-93d1-4b1b-9580-5c13e73776c2",
+        "buy_buttons",
+        "promo_B9WFeV",
+        "promo_9nPByD",
+        "promo_QdGPym",
+        "promo_W3Rmdw",
+        "6be49df1-2de0-49c6-9f17-baef396c43c2",
+        "text_DWTEek",
+        "payment_DHPmL3",
+        "promo_slide_jgy7R9",
+        "ad4a2bc2-8dd2-4105-9923-5bd7d66f77f3",
+        "eb02bfdc-836f-40fa-bc36-a93ccbb6f998",
+        "description",
+        "share"
+      ],
+      "custom_css": [],
+      "settings": {
+        "enable_sticky_info": true,
+        "display_variant_image_first": false,
+        "color_scheme": "background-1",
+        "show_container": false,
+        "container_radius": 8,
+        "container_padding": 30,
+        "container_color": "#ffffff",
+        "container_border_color": "#eeecff",
+        "container_text": "",
+        "container_text_bg": "#212121",
+        "container_text_txt": "#ffffff",
+        "show_container_mb": false,
+        "container_padding_mb": 20,
+        "container_radius_mb": 8,
+        "container_color_mb": "#ffffff",
+        "container_border_color_mb": "#7069bc",
+        "media_size": "medium",
+        "constrain_to_viewport": false,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail_slider",
+        "thumbnail_size": 70,
+        "thumbnail_radius": 4,
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "mobile_thumbnails": "show",
+        "show_full_image": true,
+        "first_image_size": 100,
+        "second_image_size": 0,
+        "hide_variants": true,
+        "enable_video_looping": true,
+        "padding_top": 20,
+        "padding_bottom": 76,
+        "padding_top_mb": 0,
+        "padding_bottom_mb": 36
+      }
+    },
+
+
+    "comparison_table_weEBa6": {
+      "type": "comparison-table",
+      "blocks": {
+        "row_gGix3c": {
+          "type": "row",
+          "settings": {
+            "benefit": "100% Organic Ingredients",
+            "us": true,
+            "others": false
+          }
+        },
+        "row_GD4keD": {
+          "type": "row",
+          "settings": {
+            "benefit": "Dermatologist Tested",
+            "us": true,
+            "others": false
+          }
+        },
+        "row_RjxJwy": {
+          "type": "row",
+          "settings": {
+            "benefit": "Cruelty Free",
+            "us": true,
+            "others": false
+          }
+        },
+        "row_UCwzEV": {
+          "type": "row",
+          "settings": {
+            "benefit": "24h Hydration",
+            "us": true,
+            "others": false
+          }
+        },
+        "row_WrB3M7": {
+          "type": "row",
+          "settings": {
+            "benefit": "Fast Absorption",
+            "us": true,
+            "others": false
+          }
+        }
+      },
+      "block_order": [
+        "row_gGix3c",
+        "row_GD4keD",
+        "row_RjxJwy",
+        "row_UCwzEV",
+        "row_WrB3M7"
+      ],
+      "settings": {
+        "title": "Why Choose Lumin?",
+        "heading_size": "h1",
+        "text": "We offer the best quality on the market.",
+        "button_label": "",
+        "link": "",
+        "button_style_secondary": false,
+        "layout": "table_second",
+        "color_scheme": "",
+        "logo_width": 90,
+        "mobile_logo_width": 60,
+        "us_label": "",
+        "others_label": "PRODUCT_OTHERS_LABEL",
+        "benefit_color_scheme": "",
+        "icon_cells_color_scheme": "",
+        "checkmark_color": "#7069bc",
+        "x_color": "#000000",
+        "checkmark_active_color": "#ffffff",
+        "x_active_color": "#ffffff",
+        "active_color": "#7069bc",
+        "active_text_color": "#ffffff",
+        "active_border_color": "#837cc9",
+        "table_corner_radius": 8,
+        "font_size": 16,
+        "table_shadow_opacity": 15,
+        "table_shadow_horizontal_offset": 0,
+        "table_shadow_vertical_offset": 0,
+        "table_shadow_blur": 20,
+        "table_border_thickness": 1,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "e80cb7bb-7295-4d49-bbf9-cb8f0fdd2f92": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is this vegan?",
+            "icon": "question_mark",
+            "row_content": "Yes, 100% vegan and cruelty-free.",
+            "page": ""
+          }
+        },
+        "collapsible_row_2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Shipping time?",
+            "icon": "question_mark",
+            "row_content": "3-5 business days.",
+            "page": ""
+          }
+        },
+        "collapsible_row_3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Return policy?",
+            "icon": "question_mark",
+            "row_content": "30-day money-back guarantee.",
+            "page": ""
+          }
+        },
+        "collapsible_row_4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Sensitive skin?",
+            "icon": "question_mark",
+            "row_content": "Yes, safe for all skin types.",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_1",
+        "collapsible_row_2",
+        "collapsible_row_3",
+        "collapsible_row_4"
+      ],
+      "settings": {
+        "caption": "FAQs",
+        "heading": "Customer Q&A",
+        "heading_size": "h0",
+        "heading_alignment": "center",
+        "layout": "section",
+        "color_scheme": "scheme-af4a96f3-9954-43c2-bc96-b688af5a0d04",
+        "container_color_scheme": "accent-2",
+        "open_first_collapsible_row": false,
+        "image_ratio": "small",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "video_text_yJ6PjU": {
+      "type": "video-text",
+      "blocks": {
+        "heading_n7qWwi": {
+          "type": "heading",
+          "settings": {
+            "heading": "See It In Action",
+            "heading_size": "h1"
+          }
+        },
+        "text_FB4Yam": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Watch how our cream transforms skin texture instantly.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_n7qWwi",
+        "text_FB4Yam"
+      ],
+      "settings": {
+        "color_scheme_main": "scheme-af4a96f3-9954-43c2-bc96-b688af5a0d04",
+        "layout_width": "grid",
+        "video": "NEW_VIDEO_SOURCE_PRODUCT",
+        "height": "small",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "accent-2",
+        "mobile_content_alignment": "left",
+        "margin_top": 36,
+        "margin_bottom": 0,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "PRODUCT_RELATED_HEADING",
+        "heading_size": "h2",
+        "collection_text_alignment": "left",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "color_scheme": "background-1",
+        "image_ratio": "adapt",
+        "image_no_crop": true,
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_desc": false,
+        "quick_desc_legth": 90,
+        "quick_desc_size": 14,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+
+    "c6a2756f-efaf-4030-af3c-fec47ba7645e": {
+      "type": "custom-fonts",
+      "blocks": {
+        "2e04c79e-bc65-4c3b-aa91-a09a51a3acb0": {
+          "type": "image",
+          "settings": {
+            "name": "Gotham",
+            "custom_font_weight": "500",
+            "custom_font_style": "none",
+            "custom_font_url": "https://cdn.shopify.com/s/files/1/0839/0370/9486/files/Gotham-Bold.otf?v=1697134394",
+            "apply_h1": true,
+            "apply_h2": true,
+            "apply_h3": true,
+            "apply_h4": true,
+            "apply_h5": true,
+            "apply_h6": true,
+            "apply_span": false,
+            "apply_p": false,
+            "apply_custom": ""
+          }
+        }
+      },
+      "block_order": [
+        "2e04c79e-bc65-4c3b-aa91-a09a51a3acb0"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "comparison_table_weEBa6",
+    "e80cb7bb-7295-4d49-bbf9-cb8f0fdd2f92",
+    "video_text_yJ6PjU",
+    "related-products",
+    "c6a2756f-efaf-4030-af3c-fec47ba7645e"
+  ]
+}
