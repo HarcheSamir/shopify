@@ -6,12 +6,12 @@
         "2fead2d5-7a3f-49d9-bacf-1d813be9861e": {
           "type": "review",
           "settings": {
-            "lrw_text": "4.8 - 1356 Reviews",
+            "lrw_text": "",
             "text_size": 14,
             "star_style": "star",
             "star_size": 0.8,
             "star_rating": 4.5,
-            "lrw_star_color": "#7069bc",
+            "lrw_star_color": "#EFB7C6",
             "lrw_star_color_disable": "#eeeeee",
             "lrw_color": "#2e2a39",
             "margin_top": 8,
@@ -45,7 +45,7 @@
             "price_size_2": 1,
             "badge_price": "#8b8d8f",
             "price_bold_2": false,
-            "sale_price_color": "#7069bc",
+            "sale_price_color": "#EFB7C6",
             "regular_price_color": "#212121",
             "price_bold": true,
             "badge_hide": false,
@@ -59,11 +59,11 @@
           "type": "review_v1",
           "settings": {
             "name": "Michelle",
-            "text": "and 758 people purchased",
+            "text": "",
             "background_review": "#eeecff",
             "text_color": "#000000",
             "verified_badge": "#1c9cef",
-            "border_color": "#7069bc",
+            "border_color": "#EFB7C6",
             "border_style": "dashed",
             "border_size": 0.2,
             "font_size": 12,
@@ -74,7 +74,7 @@
         "text_benefits_JqDfxt": {
           "type": "text_benefits",
           "settings": {
-            "benefits": "<p>🚚 Free shipping<br/>🗓️ 30-Day-Guarantee</p>"
+            "benefits": ""
           }
         },
         "variant_picker": {
@@ -96,7 +96,6 @@
             "spaced_size": false
           }
         },
-
         "7105577f-93d1-4b1b-9580-5c13e73776c2": {
           "type": "inventory",
           "settings": {
@@ -105,20 +104,20 @@
             "inventory_threshold": 9,
             "show_inventory_bar": true,
             "show_inventory_pill": true,
-            "text_soldout": "PRODUCT_SOLDOUT_TEXT",
-            "text_untracked": "PRODUCT_UNTRACKED_TEXT",
-            "text_low_one": "PRODUCT_LOW_ONE_TEXT",
-            "text_low_many": "PRODUCT_LOW_MANY_TEXT",
-            "text_normal": "PRODUCT_NORMAL_TEXT",
+            "text_soldout": "Unfortunately this item is sold-out!",
+            "text_untracked": "Currently this item has stock!",
+            "text_low_one": "Hurry up! Only 1 item is in stock",
+            "text_low_many": "Hurry up! Only [qty] items are in stock.",
+            "text_normal": "Currently <b>[qty] items</b> are in stock!",
             "inv_bar_height": 8,
             "inv_bar_radius": 24,
             "inv_bar_width_normal": 70,
             "inv_bar_width_low": 15,
             "inv_bar_width_untrack": 50,
             "inv_bar_width_sold": 0,
-            "normal_pill_color": "#7069bc",
-            "normal_color": "#7069bc",
-            "normal_color_2": "#7069bc",
+            "normal_pill_color": "#EFB7C6",
+            "normal_color": "#EFB7C6",
+            "normal_color_2": "#EFB7C6",
             "low_pill_color": "#ff0505",
             "low_color": "#d50000",
             "low_color_2": "#d50000",
@@ -135,7 +134,7 @@
             "show_full_button": true,
             "cart_btn_height": 5.6,
             "cart_btn_font": 20,
-            "lm_main_button": "#6e65bc",
+            "lm_main_button": "#EFB7C6",
             "lm_main_button_gr": "",
             "lm_main_text": "#ffffff",
             "lm_button_animation": "soft",
@@ -148,7 +147,7 @@
           "settings": {
             "icon": "truck",
             "icon_width": 20,
-            "content": "<p><strong>NEW_FREE_SHIPPING_CONTENT_ST</strong></p>",
+            "content": "<p><strong></strong></p>",
             "font_size": 100
           }
         },
@@ -157,7 +156,7 @@
           "settings": {
             "icon": "return",
             "icon_width": 20,
-            "content": "<p><strong>30-Day Guarantee</strong></p>",
+            "content": "<p><strong></strong></p>",
             "font_size": 100
           }
         },
@@ -190,7 +189,7 @@
             "image_ani": "heartBeat",
             "text_size": 12,
             "text_style": "subtitle",
-            "text": "<strong>NEW_WANT_IT_BY_CONTENT (date)? NEW_ORDER_WITHIN_CONTENT [(timer)]</strong>",
+            "text": "<strong>Want it by (date)?  ORDER WITHIN [(timer)]</strong>",
             "date_locale": "en-US",
             "ship_bg": "#ffffff",
             "show_border": false,
@@ -205,7 +204,7 @@
         "text_DWTEek": {
           "type": "text",
           "settings": {
-            "text": "Safe & Secure payments",
+            "text": "",
             "text_style": "uppercase"
           }
         },
@@ -220,7 +219,30 @@
             "custom_icon_3_width": 34
           }
         },
-
+        "promo_slide_jgy7R9": {
+          "type": "promo-slide",
+          "settings": {
+            "block_heading": "Super Product!!!",
+            "text_1": "<p>Share information about your brand with your customers.  ★★★★★</p>",
+            "show_slide_2": true,
+            "block_heading_2": "Pairs well with",
+            "text_2": "<p>Share information about your brand with your customers. </p>",
+            "show_slide_3": false,
+            "block_heading_3": "Pairs well with",
+            "text_3": "<p>Share information about your brand with your customers. </p>",
+            "color_scheme": "scheme-af4a96f3-9954-43c2-bc96-b688af5a0d04",
+            "slide_padding": 14,
+            "show_border": false,
+            "border_color": "#ededed",
+            "slide_wrapper_radius": 6,
+            "slide_img_size": 60,
+            "slide_img_radius": 100,
+            "head_size": 16,
+            "text_size": 12,
+            "padding_top": 0,
+            "padding_bottom": 20
+          }
+        },
         "ad4a2bc2-8dd2-4105-9923-5bd7d66f77f3": {
           "type": "icon-with-text",
           "settings": {
@@ -228,20 +250,20 @@
             "color_scheme": "",
             "icon_font_size": 14,
             "icon_1": "box",
-            "heading_1": "FREE SHIPPING GLOBALLY",
+            "heading_1": "",
             "icon_2": "return",
-            "heading_2": "TRY IT RISK-FREE",
+            "heading_2": "",
             "icon_3": "star",
-            "heading_3": "FDA CLEARED"
+            "heading_3": ""
           }
         },
         "eb02bfdc-836f-40fa-bc36-a93ccbb6f998": {
           "type": "collapsible_tab",
           "settings": {
             "open_first_collapsible_row": false,
-            "heading": "NEW_CUSTOMER_SERVICE_TEXT_CONTENT",
+            "heading": "Customer Service",
             "icon": "none",
-            "content": "<p>NEW_CUSTOMER_SERVICE_PARAGRAPH_CONTENT</p>",
+            "content": "<p>Embrace the Freedom of Global Shipping with Every Purchase</p>",
             "page": ""
           }
         },
@@ -252,7 +274,7 @@
         "share": {
           "type": "share",
           "settings": {
-            "share_label": "PRODUCT_SHARE_LABEL"
+            "share_label": "Share"
           }
         }
       },
@@ -296,7 +318,7 @@
         "container_padding_mb": 20,
         "container_radius_mb": 8,
         "container_color_mb": "#ffffff",
-        "container_border_color_mb": "#7069bc",
+        "container_border_color_mb": "#EFB7C6",
         "media_size": "medium",
         "constrain_to_viewport": false,
         "media_fit": "contain",
@@ -317,15 +339,65 @@
         "padding_bottom_mb": 36
       }
     },
-
-
+    "lumin_slider_2_3VMDAp": {
+      "type": "lumin-slider-2",
+      "blocks": {
+        "review_image_bCTPCr": {
+          "type": "review_image",
+          "settings": {}
+        },
+        "review_image_JTABEy": {
+          "type": "review_image",
+          "settings": {}
+        },
+        "review_image_fJWCKD": {
+          "type": "review_image",
+          "settings": {}
+        },
+        "review_image_GhXraX": {
+          "type": "review_image",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "review_image_bCTPCr",
+        "review_image_JTABEy",
+        "review_image_fJWCKD",
+        "review_image_GhXraX"
+      ],
+      "settings": {
+        "content_alignment": "center",
+        "layout": "1",
+        "heading": "",
+        "subheading": "",
+        "button_text": "",
+        "button_link": "",
+        "rating_text": "",
+        "color_scheme": "scheme-af4a96f3-9954-43c2-bc96-b688af5a0d04",
+        "button_color": "#212121",
+        "star_color": "#ffd700",
+        "navigation_color": "#212121",
+        "auto_play": true,
+        "show_navigation": false,
+        "scroll_speed": 4,
+        "head_size": 42,
+        "head_size_mb": 32,
+        "subhead_size": 18,
+        "subhead_size_mb": 16,
+        "review_size": 12,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "margin_top": 36,
+        "margin_bottom": 36
+      }
+    },
     "comparison_table_weEBa6": {
       "type": "comparison-table",
       "blocks": {
         "row_gGix3c": {
           "type": "row",
           "settings": {
-            "benefit": "100% Organic Ingredients",
+            "benefit": "Caméra 4K Ultra HD à 60 fps",
             "us": true,
             "others": false
           }
@@ -333,7 +405,7 @@
         "row_GD4keD": {
           "type": "row",
           "settings": {
-            "benefit": "Dermatologist Tested",
+            "benefit": "Autonomie de vol de 30 minutes",
             "us": true,
             "others": false
           }
@@ -341,7 +413,7 @@
         "row_RjxJwy": {
           "type": "row",
           "settings": {
-            "benefit": "Cruelty Free",
+            "benefit": "Stabilisation 3 axes intelligente",
             "us": true,
             "others": false
           }
@@ -349,7 +421,7 @@
         "row_UCwzEV": {
           "type": "row",
           "settings": {
-            "benefit": "24h Hydration",
+            "benefit": "Retour Follow-Me automatique",
             "us": true,
             "others": false
           }
@@ -357,7 +429,7 @@
         "row_WrB3M7": {
           "type": "row",
           "settings": {
-            "benefit": "Fast Absorption",
+            "benefit": "Portée de transmission de 8 km",
             "us": true,
             "others": false
           }
@@ -371,9 +443,9 @@
         "row_WrB3M7"
       ],
       "settings": {
-        "title": "Why Choose Lumin?",
+        "title": "",
         "heading_size": "h1",
-        "text": "We offer the best quality on the market.",
+        "text": "",
         "button_label": "",
         "link": "",
         "button_style_secondary": false,
@@ -382,14 +454,14 @@
         "logo_width": 90,
         "mobile_logo_width": 60,
         "us_label": "",
-        "others_label": "PRODUCT_OTHERS_LABEL",
+        "others_label": "Others",
         "benefit_color_scheme": "",
         "icon_cells_color_scheme": "",
-        "checkmark_color": "#7069bc",
+        "checkmark_color": "#EFB7C6",
         "x_color": "#000000",
         "checkmark_active_color": "#ffffff",
         "x_active_color": "#ffffff",
-        "active_color": "#7069bc",
+        "active_color": "#EFB7C6",
         "active_text_color": "#ffffff",
         "active_border_color": "#837cc9",
         "table_corner_radius": 8,
@@ -409,36 +481,36 @@
         "collapsible_row_1": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Is this vegan?",
+            "heading": "",
             "icon": "question_mark",
-            "row_content": "Yes, 100% vegan and cruelty-free.",
+            "row_content": "",
             "page": ""
           }
         },
         "collapsible_row_2": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Shipping time?",
+            "heading": "",
             "icon": "question_mark",
-            "row_content": "3-5 business days.",
+            "row_content": "",
             "page": ""
           }
         },
         "collapsible_row_3": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Return policy?",
+            "heading": "",
             "icon": "question_mark",
-            "row_content": "30-day money-back guarantee.",
+            "row_content": "",
             "page": ""
           }
         },
         "collapsible_row_4": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Sensitive skin?",
+            "heading": "",
             "icon": "question_mark",
-            "row_content": "Yes, safe for all skin types.",
+            "row_content": "",
             "page": ""
           }
         }
@@ -450,8 +522,8 @@
         "collapsible_row_4"
       ],
       "settings": {
-        "caption": "FAQs",
-        "heading": "Customer Q&A",
+        "caption": "NEW_FAQs_CONTENT",
+        "heading": "",
         "heading_size": "h0",
         "heading_alignment": "center",
         "layout": "section",
@@ -470,14 +542,14 @@
         "heading_n7qWwi": {
           "type": "heading",
           "settings": {
-            "heading": "See It In Action",
+            "heading": "NEW_HEADING_PRODUCT_TEXT_VIDEO",
             "heading_size": "h1"
           }
         },
         "text_FB4Yam": {
           "type": "text",
           "settings": {
-            "text": "<p>Watch how our cream transforms skin texture instantly.</p>",
+            "text": "<p>NEW_PARAGRAPH_PRODUCT_TEXT_VIDEO</p>",
             "text_style": "body"
           }
         }
@@ -489,9 +561,9 @@
       "settings": {
         "color_scheme_main": "scheme-af4a96f3-9954-43c2-bc96-b688af5a0d04",
         "layout_width": "grid",
-        "video": "NEW_VIDEO_SOURCE_PRODUCT",
-        "height": "small",
+        "height": "medium",
         "desktop_image_width": "medium",
+        "video": "",
         "layout": "text_first",
         "desktop_content_position": "middle",
         "desktop_content_alignment": "left",
@@ -504,11 +576,10 @@
         "padding_bottom": 36
       }
     },
-
     "related-products": {
       "type": "related-products",
       "settings": {
-        "heading": "PRODUCT_RELATED_HEADING",
+        "heading": "You may also like",
         "heading_size": "h2",
         "collection_text_alignment": "left",
         "products_to_show": 4,
@@ -527,7 +598,6 @@
         "padding_bottom": 28
       }
     },
-
     "c6a2756f-efaf-4030-af3c-fec47ba7645e": {
       "type": "custom-fonts",
       "blocks": {
@@ -561,6 +631,7 @@
   },
   "order": [
     "main",
+    "lumin_slider_2_3VMDAp",
     "comparison_table_weEBa6",
     "e80cb7bb-7295-4d49-bbf9-cb8f0fdd2f92",
     "video_text_yJ6PjU",

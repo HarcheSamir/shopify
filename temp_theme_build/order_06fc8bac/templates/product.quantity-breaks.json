@@ -11,7 +11,7 @@
             "star_style": "star",
             "star_size": 0.8,
             "star_rating": 4.5,
-            "lrw_star_color": "#7069bc",
+            "lrw_star_color": "#EFB7C6",
             "lrw_star_color_disable": "#eeeeee",
             "lrw_color": "#2e2a39",
             "margin_top": 8,
@@ -38,7 +38,7 @@
             "price_size_2": 1,
             "badge_price": "#8b8d8f",
             "price_bold_2": false,
-            "sale_price_color": "#7069bc",
+            "sale_price_color": "#EFB7C6",
             "regular_price_color": "#212121",
             "price_bold": true,
             "badge_hide": false,
@@ -56,7 +56,7 @@
             "background_review": "#eeecff",
             "text_color": "#000000",
             "verified_badge": "#1c9cef",
-            "border_color": "#7069bc",
+            "border_color": "#EFB7C6",
             "border_style": "dashed",
             "border_size": 0.2,
             "font_size": 12,
@@ -67,7 +67,7 @@
         "text_benefits_JqDfxt": {
           "type": "text_benefits",
           "settings": {
-            "benefits": "<p>👙 Great for the bikini area<br\/>🍑 Leaves skin soft and smooth<br\/>🌸 Helps prevent ingrown hairs<br\/>🍓 No more strawberry skin<br\/>✨ Safe, gentle, and pain-free<br\/>😌 Gently exfoliates dead skin<\/p>"
+            "benefits": "<p>👙 Great for the bikini area<br/>🍑 Leaves skin soft and smooth<br/>🌸 Helps prevent ingrown hairs<br/>🍓 No more strawberry skin<br/>✨ Safe, gentle, and pain-free<br/>😌 Gently exfoliates dead skin</p>"
           }
         },
         "variant_picker": {
@@ -126,7 +126,7 @@
             "option_2_badge_text": "Most Popular",
             "option_2_unit_label": "Include FREE Shipping",
             "option_2_save_text": "",
-            "option_2_promo": "<strong>🚚 + FREE <\/strong>Body scrub for silky & shiny skin",
+            "option_2_promo": "<strong>🚚 + FREE </strong>Body scrub for silky & shiny skin",
             "option_3_show_image": true,
             "option_3_label": "3 Pack",
             "option_3_quantity": 0,
@@ -134,7 +134,7 @@
             "option_3_discount_percentage": 20,
             "option_3_badge_enable": false,
             "option_3_badge_text": "Most Popular",
-            "option_3_unit_label": "($)\/Pcs",
+            "option_3_unit_label": "($)/Pcs",
             "option_3_save_text": "Save (%)",
             "option_3_promo": "",
             "option_4_show_image": false,
@@ -144,7 +144,7 @@
             "option_4_discount_percentage": 0,
             "option_4_badge_enable": false,
             "option_4_badge_text": "Most Popular",
-            "option_4_unit_label": "($)\/Pcs",
+            "option_4_unit_label": "($)/Pcs",
             "option_4_save_text": "Save (%)",
             "option_4_promo": "",
             "option_5_show_image": false,
@@ -154,7 +154,7 @@
             "option_5_discount_percentage": 0,
             "option_5_badge_enable": false,
             "option_5_badge_text": "Most Popular",
-            "option_5_unit_label": "($)\/Pcs",
+            "option_5_unit_label": "($)/Pcs",
             "option_5_save_text": "Save (%)",
             "option_5_promo": "",
             "option_6_show_image": false,
@@ -164,14 +164,14 @@
             "option_6_discount_percentage": 0,
             "option_6_badge_enable": false,
             "option_6_badge_text": "Most Popular",
-            "option_6_unit_label": "($)\/Pcs",
+            "option_6_unit_label": "($)/Pcs",
             "option_6_save_text": "Save (%)",
             "option_6_promo": "",
             "show_quantity_label": false,
             "hide_lines": false,
             "show_head_border": false,
             "title_text_align": "center",
-            "quantity_title_text": "<p>[⚡︎ <strong>Buy <\/strong><em><strong>More<\/strong><\/em><strong> Save <\/strong><em><strong>More<\/strong><\/em> ⚡︎]<\/p>",
+            "quantity_title_text": "<p>[⚡︎ <strong>Buy </strong><em><strong>More</strong></em><strong> Save </strong><em><strong>More</strong></em> ⚡︎]</p>",
             "quantity_subtitle_text": "",
             "title_font_size": 1.6,
             "subtitle_font_size": 1.3,
@@ -198,8 +198,8 @@
             "border-color-hover-unselected": "#eeeeee",
             "text_color_selected": "#2e2a39",
             "selected_button_bg_color": "#eeecff",
-            "selected_button_dot_color": "#7069bc",
-            "selected_button_border_color": "#7069bc",
+            "selected_button_dot_color": "#EFB7C6",
+            "selected_button_border_color": "#EFB7C6",
             "savings_text_color": "#2e2a39",
             "savings_bg_color": "#e4e1ff",
             "badge_bg_color": "#e3567e",
@@ -207,14 +207,14 @@
             "badge_font_color": "#ffffff",
             "compare_font_color": "#e3567e",
             "promo_font_color": "#ffffff",
-            "promo_bg_color": "#7069bc",
-            "promo_border_color": "#7069bc"
+            "promo_bg_color": "#EFB7C6",
+            "promo_border_color": "#EFB7C6"
           }
         },
         "8f8d8903-27e7-4cac-99c4-ec1b60b7f309": {
           "type": "fomo",
           "settings": {
-            "fomo_text_before": "<strong>Free Shipping<\/strong> included for the next <strong>8<\/strong> orders!",
+            "fomo_text_before": "<strong>Free Shipping</strong> included for the next <strong>8</strong> orders!",
             "text_style": "body",
             "text_size": 14,
             "color_scheme": "inverse",
@@ -243,16 +243,16 @@
             "text_untracked": "Currently this item has stock!",
             "text_low_one": "Hurry up! Only 1 item is in stock",
             "text_low_many": "Hurry up! Only [qty] items are in stock.",
-            "text_normal": "Currently <b>[qty] items<\/b> are in stock!",
+            "text_normal": "Currently <b>[qty] items</b> are in stock!",
             "inv_bar_height": 8,
             "inv_bar_radius": 24,
             "inv_bar_width_normal": 70,
             "inv_bar_width_low": 15,
             "inv_bar_width_untrack": 50,
             "inv_bar_width_sold": 0,
-            "normal_pill_color": "#7069bc",
-            "normal_color": "#7069bc",
-            "normal_color_2": "#7069bc",
+            "normal_pill_color": "#EFB7C6",
+            "normal_color": "#EFB7C6",
+            "normal_color_2": "#EFB7C6",
             "low_pill_color": "#ff0505",
             "low_color": "#d50000",
             "low_color_2": "#d50000",
@@ -269,7 +269,7 @@
             "show_full_button": true,
             "cart_btn_height": 5.6,
             "cart_btn_font": 20,
-            "lm_main_button": "#6e65bc",
+            "lm_main_button": "#EFB7C6",
             "lm_main_button_gr": "",
             "lm_main_text": "#ffffff",
             "lm_button_animation": "soft",
@@ -282,7 +282,7 @@
           "settings": {
             "icon": "truck",
             "icon_width": 20,
-            "content": "<p><strong>Free Shipping<\/strong><\/p>",
+            "content": "<p><strong>Free Shipping</strong></p>",
             "font_size": 100
           }
         },
@@ -291,7 +291,7 @@
           "settings": {
             "icon": "return",
             "icon_width": 20,
-            "content": "<p><strong>30-Day-Guarantee<\/strong><\/p>",
+            "content": "<p><strong>30-Day-Guarantee</strong></p>",
             "font_size": 100
           }
         },
@@ -301,7 +301,7 @@
           "settings": {
             "icon": "chat_bubble",
             "icon_width": 20,
-            "content": "<p>24\/7 Customer Support<\/p>",
+            "content": "<p>24/7 Customer Support</p>",
             "font_size": 100
           }
         },
@@ -311,7 +311,7 @@
           "settings": {
             "icon": "leaf",
             "icon_width": 20,
-            "content": "<p>100% Satisfaction Guaranteed<\/p>",
+            "content": "<p>100% Satisfaction Guaranteed</p>",
             "font_size": 100
           }
         },
@@ -324,7 +324,7 @@
             "image_ani": "heartBeat",
             "text_size": 12,
             "text_style": "subtitle",
-            "text": "<strong>Want it by (date)?  ORDER WITHIN [(timer)]<\/strong>",
+            "text": "<strong>Want it by (date)?  ORDER WITHIN [(timer)]</strong>",
             "date_locale": "en-US",
             "ship_bg": "#ffffff",
             "show_border": false,
@@ -358,13 +358,13 @@
           "type": "promo-slide",
           "settings": {
             "block_heading": "Super Product!!!",
-            "text_1": "<p>Share information about your brand with your customers.  ★★★★★<\/p>",
+            "text_1": "<p>Share information about your brand with your customers.  ★★★★★</p>",
             "show_slide_2": true,
             "block_heading_2": "Pairs well with",
-            "text_2": "<p>Share information about your brand with your customers. <\/p>",
+            "text_2": "<p>Share information about your brand with your customers. </p>",
             "show_slide_3": false,
             "block_heading_3": "Pairs well with",
-            "text_3": "<p>Share information about your brand with your customers. <\/p>",
+            "text_3": "<p>Share information about your brand with your customers. </p>",
             "color_scheme": "scheme-af4a96f3-9954-43c2-bc96-b688af5a0d04",
             "slide_padding": 14,
             "show_border": false,
@@ -398,7 +398,7 @@
             "open_first_collapsible_row": false,
             "heading": "Customer Service",
             "icon": "none",
-            "content": "<p>Embrace the Freedom of Global Shipping with Every Purchase<\/p>",
+            "content": "<p>Embrace the Freedom of Global Shipping with Every Purchase</p>",
             "page": ""
           }
         },
@@ -454,7 +454,7 @@
         "container_padding_mb": 20,
         "container_radius_mb": 8,
         "container_color_mb": "#ffffff",
-        "container_border_color_mb": "#7069bc",
+        "container_border_color_mb": "#EFB7C6",
         "media_size": "medium",
         "constrain_to_viewport": false,
         "media_fit": "contain",
@@ -481,7 +481,7 @@
         "template--20863348932914__a1098323-9921-48ef-9777-4dd2323c4c96-announcement-1": {
           "type": "announcement",
           "settings": {
-            "Announcement": "<h2>Take <em>20% Off  With <\/em>Code <strong>SAVE20<\/strong><\/h2>",
+            "Announcement": "<h2>Take <em>20% Off  With </em>Code <strong>SAVE20</strong></h2>",
             "announcement_size": 60,
             "announcement_size_m": 40,
             "text_spacing": -0.5,
@@ -494,7 +494,7 @@
         "template--20863348932914__a1098323-9921-48ef-9777-4dd2323c4c96-announcement-2": {
           "type": "announcement",
           "settings": {
-            "Announcement": "<h2><em>Free Shipping<\/em> on Order Over $199<\/h2>",
+            "Announcement": "<h2><em>Free Shipping</em> on Order Over $199</h2>",
             "announcement_size": 60,
             "announcement_size_m": 40,
             "text_spacing": -0.5,
@@ -614,7 +614,7 @@
             "head_size_d": 30,
             "head_size_m": 24,
             "margin_bottom": 15,
-            "subtitle": "<p>Highlight the key benefits and features of your product or service in a concise and visually appealing manner. Use icons or graphics to make it more engaging.<\/p>",
+            "subtitle": "<p>Highlight the key benefits and features of your product or service in a concise and visually appealing manner. Use icons or graphics to make it more engaging.</p>",
             "text_color": "#212121",
             "text_size_d": 16,
             "text_size_m": 14,
@@ -696,7 +696,7 @@
             "bg_color": "rgba(0,0,0,0)",
             "icon_size": 25,
             "icon_corner": 0,
-            "head": "<strong>5000+<\/strong>",
+            "head": "<strong>5000+</strong>",
             "use_body_font": false,
             "head_color": "#ffffff",
             "head_size_d": 44,
@@ -731,7 +731,7 @@
             "bg_color": "rgba(0,0,0,0)",
             "icon_size": 25,
             "icon_corner": 0,
-            "head": "<strong>100k <\/strong>+",
+            "head": "<strong>100k </strong>+",
             "use_body_font": false,
             "head_color": "#ffffff",
             "head_size_d": 44,
@@ -766,7 +766,7 @@
             "bg_color": "rgba(0,0,0,0)",
             "icon_size": 25,
             "icon_corner": 0,
-            "head": "<strong>1Million<\/strong>",
+            "head": "<strong>1Million</strong>",
             "use_body_font": false,
             "head_color": "#ffffff",
             "head_size_d": 44,
@@ -810,7 +810,7 @@
           "settings": {
             "heading": "What if it doesn’t work for me?",
             "icon": "none",
-            "row_content": "<p>Enjoy the Flexibility of a 30-Day Return Period for Our Products.<\/p>",
+            "row_content": "<p>Enjoy the Flexibility of a 30-Day Return Period for Our Products.</p>",
             "page": ""
           }
         },
@@ -819,7 +819,7 @@
           "settings": {
             "heading": "What Included in the box?",
             "icon": "none",
-            "row_content": "<p>Some Text<\/p>",
+            "row_content": "<p>Some Text</p>",
             "page": ""
           }
         },
@@ -828,7 +828,7 @@
           "settings": {
             "heading": "Guarentee?",
             "icon": "none",
-            "row_content": "<p>Shop with Confidence Knowing that Our Products are Guaranteed to Meet Your Expectations.<\/p>",
+            "row_content": "<p>Shop with Confidence Knowing that Our Products are Guaranteed to Meet Your Expectations.</p>",
             "page": ""
           }
         },
@@ -837,7 +837,7 @@
           "settings": {
             "heading": "Free Shipping?",
             "icon": "none",
-            "row_content": "<p>Yep! We offer FREE U.S. shipping as well as FREE shipping to 20+ countries worldwide.<\/p>",
+            "row_content": "<p>Yep! We offer FREE U.S. shipping as well as FREE shipping to 20+ countries worldwide.</p>",
             "page": ""
           }
         },
@@ -846,7 +846,7 @@
           "settings": {
             "heading": "Do you provide tracking information?",
             "icon": "none",
-            "row_content": "<p>Yes, Every order includes a tracking number which will be provided via email or text once your order is fulfilled.<\/p>",
+            "row_content": "<p>Yes, Every order includes a tracking number which will be provided via email or text once your order is fulfilled.</p>",
             "page": ""
           }
         }
@@ -935,7 +935,7 @@
         "text_FB4Yam": {
           "type": "text",
           "settings": {
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
             "text_style": "body"
           }
         }
@@ -977,7 +977,7 @@
             "icon_size": 50,
             "heading": "List Feature",
             "heading_size_alt": 18,
-            "text": "<p>Skin-friendly silicone material<\/p>"
+            "text": "<p>Skin-friendly silicone material</p>"
           }
         },
         "47579649-4b2d-4ed5-ba6e-29671db5e59d": {
@@ -986,7 +986,7 @@
             "icon_size": 50,
             "heading": "Enhanced Safety",
             "heading_size_alt": 18,
-            "text": "<p>Auto power-off function, and safe.<\/p>"
+            "text": "<p>Auto power-off function, and safe.</p>"
           }
         },
         "3e7cf23e-7ece-49ce-a9a1-33ebc225f2ea": {
@@ -995,7 +995,7 @@
             "icon_size": 50,
             "heading": "Constant Heating",
             "heading_size_alt": 18,
-            "text": "<p>Skin-friendly silicone material<\/p>"
+            "text": "<p>Skin-friendly silicone material</p>"
           }
         },
         "4a0c85ec-0154-499f-a259-20516b12b920": {
@@ -1004,7 +1004,7 @@
             "icon_size": 50,
             "heading": "Staggering Battery Life",
             "heading_size_alt": 18,
-            "text": "<p>Can be directly powered by USB charging.<\/p>"
+            "text": "<p>Can be directly powered by USB charging.</p>"
           }
         }
       },
@@ -1048,13 +1048,13 @@
           "settings": {
             "icon_size": 70,
             "circle_width": 5,
-            "percent_bg": "#7069bc",
+            "percent_bg": "#EFB7C6",
             "percent_border": "#f2f2f2",
             "circle_value_1": 92,
             "percent_text": 10,
             "heading": "",
             "heading_size_alt": 20,
-            "text": "<p>Agreed skin feel smoother<br\/>and cleaner after first use<\/p>"
+            "text": "<p>Agreed skin feel smoother<br/>and cleaner after first use</p>"
           }
         },
         "19cee79c-4487-432f-9022-aa2a3b85d13e": {
@@ -1062,13 +1062,13 @@
           "settings": {
             "icon_size": 70,
             "circle_width": 5,
-            "percent_bg": "#7069bc",
+            "percent_bg": "#EFB7C6",
             "percent_border": "#f2f2f2",
             "circle_value_1": 92,
             "percent_text": 10,
             "heading": "",
             "heading_size_alt": 20,
-            "text": "<p>Agreed skin feel smoother and cleaner after first use<\/p>"
+            "text": "<p>Agreed skin feel smoother and cleaner after first use</p>"
           }
         },
         "70a2b173-fd56-4c7c-b82b-ef7b6a2571d1": {
@@ -1076,19 +1076,19 @@
           "settings": {
             "icon_size": 70,
             "circle_width": 5,
-            "percent_bg": "#7069bc",
+            "percent_bg": "#EFB7C6",
             "percent_border": "#f2f2f2",
             "circle_value_1": 85,
             "percent_text": 10,
             "heading": "",
             "heading_size_alt": 20,
-            "text": "<p>Agreed skin feel smoother and cleaner after first use<\/p>"
+            "text": "<p>Agreed skin feel smoother and cleaner after first use</p>"
           }
         },
         "c8dbfcc3-3193-4281-af86-b01e2ea3edf9": {
           "type": "text",
           "settings": {
-            "text": "<p>These benefits are designed to promote teeth whitening products and services, <strong>highlighting the benefits of a brighter smile.<\/strong> <\/p>",
+            "text": "<p>These benefits are designed to promote teeth whitening products and services, <strong>highlighting the benefits of a brighter smile.</strong> </p>",
             "text_style": "body"
           }
         }
@@ -1259,7 +1259,7 @@
         "star_style": "star",
         "star_size": 0.7,
         "star_radius": 0,
-        "feature_svg_color": "#7069bc",
+        "feature_svg_color": "#EFB7C6",
         "inactive_star_color": "#e2e2e2",
         "show_border": true,
         "rw_border": "rgba(0,0,0,0)",
@@ -1268,7 +1268,7 @@
         "section_bg2": "#1cc286",
         "verify_text": "Verified Buyer",
         "review_bg": "#ffffff",
-        "feature_acc_color": "#7069bc",
+        "feature_acc_color": "#EFB7C6",
         "review_pd": 28,
         "review_pd_m": 20,
         "show_footer": true,
@@ -1330,7 +1330,7 @@
             "text_size_d": 16,
             "text_size_m": 14,
             "button-text": "#LUMINTHEME",
-            "button_link": "shopify:\/\/collections\/all",
+            "button_link": "shopify://collections/all",
             "image_content_position": "middle-right",
             "desktop_content_alignment": "right",
             "grid-url": ""
@@ -1512,10 +1512,10 @@
             "text_size_d": 16,
             "text_size_m": 14,
             "button-text": "#LUMINTHEME",
-            "button_link": "shopify:\/\/collections\/all",
+            "button_link": "shopify://collections/all",
             "image_content_position": "middle-right",
             "desktop_content_alignment": "right",
-            "grid-url": "shopify:\/\/products\/flavour-toothpaste"
+            "grid-url": "shopify://products/flavour-toothpaste"
           }
         },
         "b456bdad-f2ba-4aca-a4eb-7f0e47c01984": {
@@ -1609,7 +1609,7 @@
             "name": "Gotham",
             "custom_font_weight": "500",
             "custom_font_style": "none",
-            "custom_font_url": "https:\/\/cdn.shopify.com\/s\/files\/1\/0839\/0370\/9486\/files\/Gotham-Bold.otf?v=1697134394",
+            "custom_font_url": "https://cdn.shopify.com/s/files/1/0839/0370/9486/files/Gotham-Bold.otf?v=1697134394",
             "apply_h1": true,
             "apply_h2": true,
             "apply_h3": true,
