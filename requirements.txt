@@ -3,4 +3,3 @@ requests==2.31.0
 pydantic>=2.6.1
 python-dotenv==1.0.1
 Pillow==10.2.0
-pyngrok==7.1.6
