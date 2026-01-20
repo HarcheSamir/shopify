@@ -25,7 +25,6 @@ class ThemeManager:
 
         shutil.copytree(src_theme, workspace_path)
 
-        # Force copy correct templates from root of assets/shopify-template
         files_to_repair = {
             "index.json": "templates",
             "product.json": "templates",
@@ -115,18 +114,11 @@ class ThemeManager:
         return content
 
     def escape_json_string(self, text: str) -> str:
-        """
-        CRITICAL FIX: Escapes double quotes and backslashes.
-        Prevents JSON corruption when AI text contains quotes.
-        """
         if not text:
             return ""
-        # 1. Remove surrounding quotes if OpenAI added them unnecessarily to the string itself
         text_str = str(text).strip()
         if text_str.startswith('"') and text_str.endswith('"') and len(text_str) > 1:
             text_str = text_str[1:-1]
-            
-        # 2. Escape inner quotes and backslashes for JSON syntax
         return text_str.replace('\\', '\\\\').replace('"', '\\"')
 
     def process_notebook_logic(self, workspace_path: str, ai_content: dict, images_map: dict, main_color: str, brand_name: str, product_handle:str):
@@ -138,7 +130,6 @@ class ThemeManager:
         f_footer = os.path.join(workspace_path, "sections", "footer-group.json")
         f_contact = os.path.join(workspace_path, "templates", "page.contact.json")
 
-        # Helper to apply safe replacements
         def apply_safe_replacements(content, keys_list):
             for k in keys_list:
                 raw_val = ai_content.get(k, "")
@@ -150,7 +141,6 @@ class ThemeManager:
         if os.path.exists(f_settings):
             with open(f_settings, 'r') as f: content = f.read()
             content = content.replace("NEW_THEME_PRIMARY_COLOR", main_color)
-            # Escape Brand Name
             content = content.replace("NEW_THEME_BRAND_NAME", self.escape_json_string(brand_name))
 
             for k, v in ai_content.items():
@@ -170,12 +160,10 @@ class ThemeManager:
             for k, v in images_map.items():
                 content = content.replace(k, v)
 
-            # Fix Product Handle
             pattern = r'"product":\s*"[^"]*"'
             replacement = f'"product": "{product_handle}"'
             content = re.sub(pattern, replacement, content)
 
-            # Inject Reviews & Order (These are already JSON strings, so don't escape)
             blocks_json = json.dumps(self.reviews_blocks, ensure_ascii=False)
             pattern_blocks = r'"blocks"\s*:\s*"NEW_THEME_MULTICOLUMN_REVIEWS_BLOCKS"'
             content = re.sub(pattern_blocks, lambda m: f'"blocks": {blocks_json}', content)
@@ -184,10 +172,8 @@ class ThemeManager:
             pattern_order = r'"block_order"\s*:\s*"NEW_THEME_MULTICOLUMN_REVIEWS_BLOCK_ORDER"'
             content = re.sub(pattern_order, lambda m: f'"block_order": {order_json}', content)
 
-            # Inject Comparison Data
             content = content.replace("NEW_THEME_COMPARISON_DATA", json.dumps(self.comparison_data, ensure_ascii=False))
 
-            # Inject All Text Keys SAFELY
             text_keys = [
                 "NEW_THEME_INITIAL_REVIEW_TITLE", "NEW_THEME_INITIAL_REVIEW_SUBTITLE",
                 "NEW_THEME_ANNOUNCEMENT_TEXT1", "NEW_THEME_ANNOUNCEMENT_TEXT2",
@@ -203,7 +189,6 @@ class ThemeManager:
                 "NEW_THEME_PRODUCT_IMAGE_TITLE", "NEW_THEME_BENIFIT_AND_FEATURE",
                 "NEW_THEME_SHOP_COLLECTION_TRANSLATION", "NEW_THEME_PRODUCT_IMAGE_TITLE_2",
                 "NEW_THEME_HELP_SECTION_HEADLINE", "NEW_THEME_HELP_SECTION_SUBHEADING",
-                # Granular Keys
                 "NEW_BRAND_SLOGAN_CONTENT", "NEW_PRODUCT_BLURB_CONTENT", "NEW_CTA_HERO_BUTTON_CONTENT",
                 "NEW_PRODUCT_DESCRIPTION_1_CONTENT", "NEW_PRODUCT_HEADING_1_CONTENT", "NEW_SECOND_SLOGAN_CONTENT",
                 "NEW_NEED_HELP_CONTENT", "NEW_OUR_TEAM_IS_HERE_CONTENT", "NEW_CONTACT_US_BUTTON_CONTENT",
@@ -225,6 +210,7 @@ class ThemeManager:
             with open(f_product, 'r') as f: content = f.read()
             content = content.replace("NEW_THEME_FAQ_DATA", json.dumps(self.faq_data, ensure_ascii=False))
 
+            # --- PRE-PROCESS: Standard Replacements ---
             p_keys = [
                 "NEW_THEME_WHAT_MAKES_OUR_PRODUCT_UNIQUE_TITLE", "NEW_THEME_PRODUCT_PAGE_IT1_TITLE",
                 "NEW_THEME_PRODUCT_PAGE_IT1_TEXT", "NEW_THEME_PRODUCT_PAGE_IT2_TITLE",
@@ -241,13 +227,51 @@ class ThemeManager:
                 "NEW_FAQs_CONTENT", "NEW_CUSTOMER_QA_CONTENT", "NEW_758_PURCHASED_CONTENT", "NEW_HEADING_PRODUCT_NAME_CONTENT",
                 "NEW_30DAY_GUARANTEE_CONTENT", "NEW_WHAT_OUR_CUSTOMERS_SAY_CONTENT", "NEW_PARAGRAPH_PRODUCT_TEXT_VIDEO",
                 "NEW_HEADING_PRODUCT_TEXT_VIDEO", "NEW_CUSTOMER_SERVICE_TEXT_CONTENT", "NEW_CUSTOMER_SERVICE_PARAGRAPH_CONTENT",
-                "NEW_PROS_1_CONTENT", "NEW_PROS_2_CONTENT", "NEW_PROS_3_CONTENT", "NEW_PROS_4_CONTENT", "NEW_PROS_5_CONTENT",
                 "PRODUCT_SOLDOUT_TEXT", "PRODUCT_UNTRACKED_TEXT", "PRODUCT_LOW_ONE_TEXT", "PRODUCT_LOW_MANY_TEXT",
                 "PRODUCT_NORMAL_TEXT", "PRODUCT_SHARE_LABEL", "PRODUCT_OTHERS_LABEL", "PRODUCT_RELATED_HEADING"
             ]
             content = apply_safe_replacements(content, p_keys)
-
             content = self.cleanup_placeholders(content)
+
+            # --- POST-PROCESS: Surgical Replacement for Table Rows & Header ---
+            # This overwrites the hardcoded Drone text
+            try:
+                data = json.loads(content)
+                if "sections" in data:
+                    for section_id, section in data["sections"].items():
+                        # Find the Comparison Table Section
+                        # Usually identifies by type or specific blocks
+                        if section.get("type") == "comparison-table" or "comparison" in section_id:
+                            
+                            # 1. Update Header (Fixing "dycom-test-01")
+                            if "settings" in section:
+                                if "us_heading" in section["settings"]:
+                                    section["settings"]["us_heading"] = self.escape_json_string(brand_name)
+                                if "product_heading" in section["settings"]:
+                                    section["settings"]["product_heading"] = self.escape_json_string(brand_name)
+
+                            # 2. Update Rows (Fixing Drone Text)
+                            if "blocks" in section:
+                                # Map IDs to keys. NOTE: These IDs must match your base template.
+                                row_map = {
+                                    "row_gGix3c": "NEW_PROS_1_CONTENT",
+                                    "row_GD4keD": "NEW_PROS_2_CONTENT",
+                                    "row_RjxJwy": "NEW_PROS_3_CONTENT",
+                                    "row_UCwzEV": "NEW_PROS_4_CONTENT",
+                                    "row_WrB3M7": "NEW_PROS_5_CONTENT"
+                                }
+                                for bid, key in row_map.items():
+                                    if bid in section["blocks"]:
+                                        new_text = ai_content.get(key, "")
+                                        if new_text:
+                                            # Update "benefit" or "text" depending on schema
+                                            if "settings" in section["blocks"][bid]:
+                                                section["blocks"][bid]["settings"]["benefit"] = self.escape_json_string(new_text)
+
+                content = json.dumps(data, indent=2, ensure_ascii=False)
+            except Exception as e:
+                print(f"   ⚠️ Error during surgical JSON update: {e}")
+
             with open(f_product, 'w') as f: f.write(content)
 
         # 4. FOOTER
