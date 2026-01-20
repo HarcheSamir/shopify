@@ -14,8 +14,8 @@ from src.clients.shopify_client import ShopifyClient
 from src.theme_manager import ThemeManager
 from src.logic.theme_utils import replace_colors_in_json_files, inject_video_id
 from src.mocks.data_payloads import MOCK_THEME_CONTENT, MOCK_IMAGES
+from src.mocks.mock_visual_generation import mock_generate_all_visuals
 from src.logic.content_prompts import (
-    get_new_theme_content,
     generate_slogan_prompt,
     generate_product_blurb_prompt,
     generate_cta_prompt,
@@ -29,14 +29,23 @@ from src.logic.content_prompts import (
     translate_benefits,
     generate_customer_qna,
     get_valid_reviews,
-    get_pros_json
+    get_pros_json,
+    prompt_gpt
 )
+from src.logic.visual_generation import generate_all_visuals
+from src.logic.color_optimizer import generate_new_color_schemas, fix_color_schema, ShopifyColorSchemeOptimizer
 
 # Load env vars
 load_dotenv()
 
 def print_progress(step, message):
     print(f"[{step.upper()}] {message}", flush=True)
+
+def convert_cdn_to_shopify_schema(cdn_url):
+    """Converts a raw CDN URL to the internal shopify:// schema."""
+    if not cdn_url: return ""
+    filename_part = cdn_url.split('/')[-1].split('?')[0]
+    return f"shopify://shop_images/{filename_part}"
 
 def main():
     parser = argparse.ArgumentParser()
@@ -47,11 +56,17 @@ def main():
     parser.add_argument("--access_token", default=os.getenv("SHOPIFY_ACCESS_TOKEN"))
     parser.add_argument("--primary_color", default="#EFB7C6")
     parser.add_argument("--language", default="fr")
+    parser.add_argument("--input_image", default=os.path.join("input", "product.png"), help="Path to source product image")
     parser.add_argument("--test", action="store_true", help="Run in test mode (No AI costs)")
     args = parser.parse_args()
 
     if not args.shopify_url or not args.access_token:
         print("❌ Error: SHOPIFY_STORE_URL and SHOPIFY_ACCESS_TOKEN are required.")
+        sys.exit(1)
+
+    # Validate Input Image for Production Mode
+    if not args.test and not os.path.exists(args.input_image):
+        print(f"❌ Error: Input image not found at {args.input_image}. Required for AI generation.")
         sys.exit(1)
 
     job_id = str(uuid.uuid4())[:8]
@@ -71,19 +86,20 @@ def main():
     theme_manager = ThemeManager(BASE_THEME_PATH, TEMP_DIR)
 
     ai_content = {}
-    images_map = {}
-    product_image_urls = []
+    images_map = {} # Maps Placeholder -> shopify:// URL
+    product_image_urls = [] # List of https:// CDN URLs for Product API
+    video_shopify_url = None
 
-    # --- 1. CONTENT GENERATION ---
+    # ==============================================================================
+    # 1. CONTENT GENERATION
+    # ==============================================================================
     if args.test:
         print_progress("ai_text", "🧪 TEST MODE: Using Rich Mock Data...")
         ai_content = MOCK_THEME_CONTENT.copy()
         if args.brand_name != "Luminelle Beauty":
             ai_content["NEW_THEME_BRAND_NAME"] = args.brand_name
     else:
-        print_progress("ai_text", "🧠 Generating Marketing Copy with OpenAI & DeepSeek...")
-        
-        # NOTE: DeepSeek structure call is deferred to next phase.
+        print_progress("ai_text", "🧠 Generating Marketing Copy with OpenAI...")
         
         # A. Slogans & Blurbs
         ai_content["NEW_BRAND_SLOGAN_CONTENT"] = generate_slogan_prompt(args.product_title, args.product_description, args.language)
@@ -95,16 +111,8 @@ def main():
         # B. Product Descriptions
         ai_content["NEW_PRODUCT_DESCRIPTION_1_CONTENT"] = generate_product_description_prompt(args.product_title, args.product_description, args.language)
         
-        # Note: prompt_gpt is imported via content_prompts implicit logic for now inside functions, 
-        # but here we used prompt_gpt directly in previous snippet. 
-        # To be safe, we should assume the helper functions handle it.
-        # However, for the Heading generation which was raw prompt_gpt in notebook:
-        # We will use a translation helper or just skip if too complex for this specific fix.
-        # Wait, I see I missed exporting prompt_gpt in content_prompts. 
-        # I will use translate_text as a hack or just rely on the other generators which cover most things.
-        # Actually, let's use generate_slogan_prompt logic for simple things.
-        
-        ai_content["NEW_PRODUCT_HEADING_1_CONTENT"] = "Product Heading" # Placeholder for Phase 1 fix to ensure stability
+        heading_prompt = f"Based on product title {args.product_title} and description {ai_content['NEW_PRODUCT_DESCRIPTION_1_CONTENT']} give me a 3 to 4 words heading in {args.language}. Return ONLY the text."
+        ai_content["NEW_PRODUCT_HEADING_1_CONTENT"] = prompt_gpt(heading_prompt)
 
         ai_content["NEW_SECOND_SLOGAN_CONTENT"] = generate_alternative_slogan_prompt(args.product_title, args.product_description, first_slogan, args.language)
         
@@ -187,29 +195,57 @@ def main():
         ai_content["NEW_THEME_BENEFITS_PRODUCT_CONTENT"] = translate_benefits(original_benefits, args.language)
 
 
-    # --- 2. IMAGES & VIDEO ---
-    video_shopify_url = None
+    # ==============================================================================
+    # 2. IMAGES & VIDEO GENERATION
+    # ==============================================================================
+    
+    generated_assets = {}
+    local_video_path = None
 
     if args.test:
-        print_progress("images", "🧪 TEST MODE: Uploading Mock Images/Video...")
-        for placeholder, url in MOCK_IMAGES.items():
-            print(f"   -> Uploading {placeholder}...")
-            shopify_url = client.upload_image_from_url(url, f"mock_{placeholder[:5]}.jpg")
-            if shopify_url:
-                images_map[placeholder] = shopify_url
-                product_image_urls.append(url)
+        print_progress("images", "🧪 TEST MODE: Generating Local Mock Assets...")
+        generated_assets, local_video_path = mock_generate_all_visuals(
+            args.product_title, 
+            args.product_description, 
+            args.input_image, 
+            TEMP_DIR
+        )
+    else:
+        print_progress("images", "🎨 Generating AI Visuals (DALL-E 2 + RunwayML)...")
+        generated_assets, local_video_path = generate_all_visuals(
+            args.product_title, 
+            args.product_description, 
+            args.input_image, 
+            TEMP_DIR
+        )
 
-        dummy_video_path = os.path.join(TEMP_DIR, "mock_video.mp4")
-        with open(dummy_video_path, "wb") as f:
-            f.write(b"dummy content" * 1024)
+    # Upload Assets
+    if generated_assets:
+        print("   -> Uploading assets to Shopify Storage...")
+        for placeholder, local_path in generated_assets.items():
+            cdn_url = client.upload_local_file(local_path, mime_type="image/png", resource="IMAGE")
+            if cdn_url:
+                theme_schema_url = convert_cdn_to_shopify_schema(cdn_url)
+                images_map[placeholder] = theme_schema_url
+                product_image_urls.append(cdn_url)
+            else:
+                print(f"      ❌ Failed to upload {placeholder}")
 
-        video_shopify_url = client.upload_video_to_shopify(dummy_video_path, "Product Video")
+    # Upload Video
+    if local_video_path and os.path.exists(local_video_path):
+        print("   -> Uploading video to Shopify...")
+        video_shopify_url = client.upload_video_to_shopify(local_video_path, "Product Video")
         if video_shopify_url:
-             print(f"   -> Video Uploaded: {video_shopify_url}")
+            print(f"      ✅ Video Ready: {video_shopify_url}")
         else:
-             print("   ⚠️ Video upload failed or skipped.")
+            print("      ❌ Video upload failed.")
+    else:
+        print("   ⚠️ No video was generated.")
 
-    # --- 3. CREATE PRODUCT ---
+
+    # ==============================================================================
+    # 3. CREATE PRODUCT
+    # ==============================================================================
     print_progress("shopify_product", "Creating product...")
     product = client.create_product(
         title=args.product_title,
@@ -219,7 +255,9 @@ def main():
     )
     product_handle = product["handle"] if product else "test-product"
 
-    # --- 4. PAGES ---
+    # ==============================================================================
+    # 4. CREATE PAGES
+    # ==============================================================================
     print_progress("shopify_pages", "Creating Pages...")
     about_html = f"""
     <div class="about-us">
@@ -230,32 +268,88 @@ def main():
     page_id = client.create_page(f"À propos", about_html)
     if page_id: client.add_page_to_menu(str(page_id), "À propos")
 
-    # --- 5. THEME INJECTION ---
+    # ==============================================================================
+    # 5. THEME INJECTION & PROCESSING
+    # ==============================================================================
     print_progress("inject", "Injecting content into theme...")
     workspace_path = theme_manager.setup_workspace(job_id)
 
+    # A. Standard replacement
     theme_manager.process_notebook_logic(
         workspace_path, ai_content, images_map, args.primary_color, args.brand_name, product_handle
     )
 
-    print_progress("colors", "Applying Deep Color Replacement...")
+    # ==============================================================================
+    # 6. COLOR INTELLIGENCE
+    # ==============================================================================
+    print_progress("colors", "Applying Color Intelligence...")
+
+    # We always run simple replacement as a baseline/fallback
     color_replacements = {
         "#7069BC": args.primary_color,
         "#6E65BC": args.primary_color,
         "NEW_WAVE_COLOR": args.primary_color
     }
-    replace_colors_in_json_files(workspace_path, color_replacements)
+    
+    if args.test:
+        print("   🧪 Test Mode: Running hex replacement only.")
+        replace_colors_in_json_files(workspace_path, color_replacements)
+    else:
+        print("   🧠 Production Mode: Generating Full Color Schema (GPT-4o)...")
+        
+        settings_path = os.path.join(workspace_path, "config", "settings_data.json")
+        index_path = os.path.join(workspace_path, "templates", "index.json")
+        product_path = os.path.join(workspace_path, "templates", "product.json")
 
+        try:
+            with open(settings_path, 'r') as f:
+                settings_content = f.read()
+
+            # 1. Generate Schema
+            new_schema_str = generate_new_color_schemas(
+                original_color_schema=settings_content,
+                theme_primary_color=args.primary_color,
+                theme_description=ai_content.get("NEW_THEME_PRODUCT_PHILOSOPHY", "Luxury Brand"),
+                index_json_path=index_path,
+                images_folder_path=TEMP_DIR
+            )
+            
+            # 2. Sanitize & Write
+            fixed_schema = fix_color_schema(new_schema_str)
+            # Verify JSON valid before writing
+            json.loads(fixed_schema) 
+            
+            with open(settings_path, 'w') as f:
+                f.write(fixed_schema)
+            print("   ✅ Applied AI Schema.")
+
+            # 3. Optimize Sections
+            optimizer = ShopifyColorSchemeOptimizer()
+            optimizer.optimize_theme_colors(fixed_schema, index_path, TEMP_DIR)
+            optimizer.optimize_theme_colors(fixed_schema, product_path, TEMP_DIR)
+
+        except Exception as e:
+            print(f"   ❌ Color Generation Failed ({e}). Falling back to simple replacement.")
+        
+        # 4. Run cleanup replacement anyway to catch hardcoded hexes in snippets
+        replace_colors_in_json_files(workspace_path, color_replacements)
+
+
+    # ==============================================================================
+    # 7. VIDEO & FINALIZATION
+    # ==============================================================================
     if video_shopify_url:
         print_progress("video", "Injecting Video ID into JSONs...")
         inject_video_id(workspace_path, video_shopify_url)
 
-    # --- 6. UPLOAD & PUBLISH ---
+    # ==============================================================================
+    # 8. UPLOAD & PUBLISH
+    # ==============================================================================
     print_progress("zip", "Zipping theme...")
     zip_path = theme_manager.zip_theme(workspace_path)
 
     print_progress("hosting", "Uploading to Shopify Storage...")
-    uploaded_file_url = client.upload_local_file(zip_path)
+    uploaded_file_url = client.upload_local_file(zip_path, mime_type="application/zip", resource="FILE")
 
     if not uploaded_file_url:
         raise Exception("Upload failed")
