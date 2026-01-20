@@ -3,6 +3,7 @@ import sys
 import json
 import uuid
 import shutil
+import re
 import argparse
 from dotenv import load_dotenv
 
@@ -100,35 +101,48 @@ def main():
             ai_content["NEW_THEME_BRAND_NAME"] = args.brand_name
     else:
         print_progress("ai_text", "🧠 Generating Marketing Copy with OpenAI...")
-        
+
         # A. Slogans & Blurbs
         ai_content["NEW_BRAND_SLOGAN_CONTENT"] = generate_slogan_prompt(args.product_title, args.product_description, args.language)
         first_slogan = ai_content["NEW_BRAND_SLOGAN_CONTENT"]
-        
+
         ai_content["NEW_PRODUCT_BLURB_CONTENT"] = generate_product_blurb_prompt(args.product_title, args.product_description, args.language)
         ai_content["NEW_CTA_HERO_BUTTON_CONTENT"] = generate_cta_prompt(args.product_title, args.product_description, args.language)
-        
+
         # B. Product Descriptions
         ai_content["NEW_PRODUCT_DESCRIPTION_1_CONTENT"] = generate_product_description_prompt(args.product_title, args.product_description, args.language)
-        
+
         heading_prompt = f"Based on product title {args.product_title} and description {ai_content['NEW_PRODUCT_DESCRIPTION_1_CONTENT']} give me a 3 to 4 words heading in {args.language}. Return ONLY the text."
         ai_content["NEW_PRODUCT_HEADING_1_CONTENT"] = prompt_gpt(heading_prompt)
 
         ai_content["NEW_SECOND_SLOGAN_CONTENT"] = generate_alternative_slogan_prompt(args.product_title, args.product_description, first_slogan, args.language)
-        
+
         # C. HTML Content
         ai_content["NEW_HIGHLIGHT_PRODUCT_FEATURES_CONTENT"] = generate_highlight_prompt(args.language, args.product_title, args.product_description)
         ai_content["NEW_WHY_CHOOSE_US_BRAND_TEXT_CONTENT"] = generate_why_choose_prompt(args.language, args.brand_name)
-        
+
         # D. Video Text
         ai_content["NEW_PARAGRAPH_PRODUCT_TEXT_VIDEO"] = generate_content_prompt_product(args.product_title, args.product_description, args.language)
         ai_content["NEW_HEADING_PRODUCT_TEXT_VIDEO"] = generate_heading_prompt_product(args.product_title, args.product_description, args.language)
+
+        # E. Complex Structures (JSON)
         
-        # E. Complex Structures
-        print("   -> Generating Reviews...")
-        reviews = get_valid_reviews(args.product_title, args.product_description, args.language)
-        ai_content.update(reviews)
+        print("   -> Generating Reviews (Structured)...")
+        # 1. Get List of Dicts
+        reviews_list = get_valid_reviews(args.product_title, args.product_description, args.language)
         
+        # 2. Assign list directly for Multicolumn section
+        ai_content["NEW_THEME_MULTICOLUMN_REVIEWS_LIST"] = reviews_list
+
+        # 3. Construct HTML strings for Home Page placeholders
+        for i in range(4):
+            if i < len(reviews_list):
+                r = reviews_list[i]
+                html_review = f"<h2>{r['review_headline']}</h2><p></p><p>{r['review_body']}</p><h6><strong>{r['author_info']}</strong></h6>"
+                ai_content[f"NEW_REVIEW_{i+1}_HOME_CONTENT"] = html_review
+            else:
+                ai_content[f"NEW_REVIEW_{i+1}_HOME_CONTENT"] = ""
+
         print("   -> Generating Q&A...")
         qna = generate_customer_qna(args.product_title, args.product_description, args.language)
         if qna:
@@ -146,7 +160,35 @@ def main():
             ai_content["NEW_PROS_4_CONTENT"] = pros.get("pros_store_4", "")
             ai_content["NEW_PROS_5_CONTENT"] = pros.get("pros_store_5", "")
 
-        # F. Translations
+        # --- F. FOOTER & TRUST BADGES (MISSING BLOCK ADDED HERE) ---
+        print("   -> Generating Footer Features...")
+        
+        # 1. Shipping
+        ai_content["NEW_THEME_FOOTER_FEATURE_1_TITLE"] = translate_text("Free Shipping", args.language)
+        ai_content["NEW_THEME_FOOTER_FEATURE_1_DESCRIPTION"] = translate_text("On all orders over $50", args.language)
+        
+        # 2. Returns
+        ai_content["NEW_THEME_FOOTER_FEATURE_2_TITLE"] = translate_text("Satisfied or Refunded", args.language)
+        ai_content["NEW_THEME_FOOTER_FEATURE_2_DESCRIPTION"] = translate_text("30-day money-back guarantee", args.language)
+        
+        # 3. Support
+        ai_content["NEW_THEME_FOOTER_FEATURE_3_TITLE"] = translate_text("Support 24/7", args.language)
+        ai_content["NEW_THEME_FOOTER_FEATURE_3_DESCRIPTION"] = translate_text("Our team is here to help", args.language)
+        
+        # 4. Security
+        ai_content["NEW_THEME_FOOTER_FEATURE_4_TITLE"] = translate_text("Secure Checkout", args.language)
+        ai_content["NEW_THEME_FOOTER_FEATURE_4_DESCRIPTION"] = translate_text("100% Secure Payment", args.language)
+
+        # Footer Misc
+        ai_content["FOOTER_ANNOUNCEMENT_1"] = translate_text("Limited Time Offer: 20% OFF", args.language)
+        ai_content["FOOTER_ANNOUNCEMENT_2"] = translate_text("New Arrivals Weekly", args.language)
+        ai_content["FOOTER_NEWSLETTER_HEADING"] = translate_text("Join Our Newsletter", args.language)
+        ai_content["FOOTER_NEWSLETTER_SUBHEADING"] = translate_text("Get exclusive deals and updates.", args.language)
+        ai_content["FOOTER_NEWSLETTER_PRIVACY_NOTE"] = translate_text("We respect your privacy.", args.language)
+        ai_content["FOOTER_GET_IN_TOUCH_TITLE"] = translate_text("Get In Touch", args.language)
+        ai_content["FOOTER_GET_IN_TOUCH_DESCRIPTION"] = f"support@{args.brand_name.lower().replace(' ', '')}.com"
+
+        # G. Translations (UI Elements)
         labels_to_translate = {
             "NEW_NEED_HELP_CONTENT": "Need Help ?",
             "NEW_OUR_TEAM_IS_HERE_CONTENT": "Our team is here to answer all your questions.",
@@ -190,7 +232,6 @@ def main():
         for key, text in labels_to_translate.items():
             ai_content[key] = translate_text(text, args.language)
 
-        # G. Special Benefits Translation (Fixed Raw String)
         original_benefits = r"<p>🚚 Free shipping with every order<br\/>☎️ 24\/7 Customer support<br\/>🗓️ 30-Day-Guarantee<br\/>✨ 4.9\/5 Customer rating<\/p>"
         ai_content["NEW_THEME_BENEFITS_PRODUCT_CONTENT"] = translate_benefits(original_benefits, args.language)
 
@@ -198,28 +239,27 @@ def main():
     # ==============================================================================
     # 2. IMAGES & VIDEO GENERATION
     # ==============================================================================
-    
+
     generated_assets = {}
     local_video_path = None
 
     if args.test:
         print_progress("images", "🧪 TEST MODE: Generating Local Mock Assets...")
         generated_assets, local_video_path = mock_generate_all_visuals(
-            args.product_title, 
-            args.product_description, 
-            args.input_image, 
+            args.product_title,
+            args.product_description,
+            args.input_image,
             TEMP_DIR
         )
     else:
         print_progress("images", "🎨 Generating AI Visuals (DALL-E 2 + RunwayML)...")
         generated_assets, local_video_path = generate_all_visuals(
-            args.product_title, 
-            args.product_description, 
-            args.input_image, 
+            args.product_title,
+            args.product_description,
+            args.input_image,
             TEMP_DIR
         )
 
-    # Upload Assets
     if generated_assets:
         print("   -> Uploading assets to Shopify Storage...")
         for placeholder, local_path in generated_assets.items():
@@ -231,7 +271,6 @@ def main():
             else:
                 print(f"      ❌ Failed to upload {placeholder}")
 
-    # Upload Video
     if local_video_path and os.path.exists(local_video_path):
         print("   -> Uploading video to Shopify...")
         video_shopify_url = client.upload_video_to_shopify(local_video_path, "Product Video")
@@ -284,19 +323,18 @@ def main():
     # ==============================================================================
     print_progress("colors", "Applying Color Intelligence...")
 
-    # We always run simple replacement as a baseline/fallback
     color_replacements = {
         "#7069BC": args.primary_color,
         "#6E65BC": args.primary_color,
         "NEW_WAVE_COLOR": args.primary_color
     }
-    
+
     if args.test:
         print("   🧪 Test Mode: Running hex replacement only.")
         replace_colors_in_json_files(workspace_path, color_replacements)
     else:
         print("   🧠 Production Mode: Generating Full Color Schema (GPT-4o)...")
-        
+
         settings_path = os.path.join(workspace_path, "config", "settings_data.json")
         index_path = os.path.join(workspace_path, "templates", "index.json")
         product_path = os.path.join(workspace_path, "templates", "product.json")
@@ -309,16 +347,16 @@ def main():
             new_schema_str = generate_new_color_schemas(
                 original_color_schema=settings_content,
                 theme_primary_color=args.primary_color,
-                theme_description=ai_content.get("NEW_THEME_PRODUCT_PHILOSOPHY", "Luxury Brand"),
+                theme_description="Luxury Brand",
                 index_json_path=index_path,
                 images_folder_path=TEMP_DIR
             )
-            
+
             # 2. Sanitize & Write
             fixed_schema = fix_color_schema(new_schema_str)
             # Verify JSON valid before writing
-            json.loads(fixed_schema) 
-            
+            json.loads(fixed_schema)
+
             with open(settings_path, 'w') as f:
                 f.write(fixed_schema)
             print("   ✅ Applied AI Schema.")
@@ -330,8 +368,8 @@ def main():
 
         except Exception as e:
             print(f"   ❌ Color Generation Failed ({e}). Falling back to simple replacement.")
-        
-        # 4. Run cleanup replacement anyway to catch hardcoded hexes in snippets
+
+        # 4. Run cleanup replacement anyway
         replace_colors_in_json_files(workspace_path, color_replacements)
 
 

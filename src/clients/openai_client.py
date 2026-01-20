@@ -3,6 +3,7 @@ from pydantic import BaseModel, Field
 import os
 import base64
 import requests
+import re
 from src.config import OPENAI_API_KEY, THEME_NAME, THEME_PRIMARY_COLOR, THEME_MOOD, THEME_DESCRIPTION
 
 # Initialize Client
@@ -12,7 +13,7 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 class PromptItem(BaseModel):
     prompt_type: str = Field(..., description="Type of prompt (e.g., studio_enhancement, in_use_1, etc.)")
     prompt: str = Field(..., description="The detailed prompt text")
-    image_size: str = Field(..., description="Target image size, e.g., '1024x1536'")
+    image_size: str = Field(..., description="Target image size, MUST be '1024x1024'")
     purpose: str = Field(..., description="Intended purpose or usage of this generated image")
 
 class Prompts(BaseModel):
@@ -22,6 +23,7 @@ class Prompts(BaseModel):
 def generate_prompts_struct(product_title, product_description):
     """
     Generates 6 distinct photography prompts based on the product details.
+    Uses Structured Output (parse), so it is robust by default.
     """
     system_prompt = """# Enhanced Product Photography Agent System Prompt
 
@@ -29,10 +31,11 @@ def generate_prompts_struct(product_title, product_description):
 You are a world-class AI image prompt engineer and commercial advertising visual director. Your job is to analyze a product and generate 6 distinct, high-performance prompts for AI image generation models that produce different types of commercial imagery for complete marketing campaigns.
 
 ## 📸 Image Categories & Specifications:
+ALL IMAGES MUST BE 1024x1024 SQUARE TO COMPLY WITH DALL-E 2.
 
 ### 1. STUDIO_ENHANCEMENT
 - **Purpose**: Professional product photography for e-commerce
-- **Resolution**: 1024x1536 (Portrait - optimal for product detail)
+- **Resolution**: 1024x1024 (Square - API Requirement)
 - **Style**: Clean, minimalist, studio-lit enhancement of the original product
 - **Lighting**: Soft diffused lighting, subtle shadows, professional studio setup
 - **Background**: Clean white/light gradient, reflective acrylic surface
@@ -41,7 +44,7 @@ You are a world-class AI image prompt engineer and commercial advertising visual
 
 ### 2-4. IN_USE (3 variations)
 - **Purpose**: Lifestyle imagery showing product being used naturally
-- **Resolution**: 1024x1024 (Square - optimal for social media and uniform display)
+- **Resolution**: 1024x1024 (Square - API Requirement)
 - **Style**: Authentic, relatable, lifestyle photography
 - **Settings**: Real-world environments where product would be used
 - **People**: Include hands/people using the product when appropriate
@@ -50,7 +53,7 @@ You are a world-class AI image prompt engineer and commercial advertising visual
 
 ### 5. BANNER_LANDSCAPE
 - **Purpose**: Website headers, hero sections, Facebook/LinkedIn covers, YouTube thumbnails
-- **Resolution**: 1536x1024 (Wide landscape - perfect for headers and covers)
+- **Resolution**: 1024x1024 (Square - Will be cropped to landscape by theme)
 - **Style**: Dynamic, cinematic, eye-catching with premium feel
 - **Composition**: Product positioned strategically with 40% space for text overlay on left or right
 - **Background**: Branded gradients, atmospheric depth, premium lighting effects
@@ -87,11 +90,11 @@ You are a world-class AI image prompt engineer and commercial advertising visual
 
 ## ✅ Expected Output:
 Generate exactly 6 prompts with these prompt_types:
-1. "studio_enhancement" - 1024x1536
+1. "studio_enhancement" - 1024x1024
 2. "in_use_1" - 1024x1024
 3. "in_use_2" - 1024x1024
 4. "in_use_3" - 1024x1024
-5. "banner_landscape" - 1536x1024
+5. "banner_landscape" - 1024x1024
 6. "banner_square" - 1024x1024
 """.format(
         theme_name=THEME_NAME,
@@ -120,56 +123,80 @@ def edit_images_with_openai(image_path, prompt, size="1024x1024", output_path="e
     Edits an image using OpenAI's DALL-E 2 API (Inpainting/Editing).
     Returns the path to the saved image.
     """
-    # Verify input exists
     if not os.path.exists(image_path):
         print(f"Error: Input image not found at {image_path}")
         return None
 
+    # DALL-E 2 Edit API strictly enforces 1024x1024.
+    if size != "1024x1024":
+        size = "1024x1024"
+
     try:
-        # Open file resource
         with open(image_path, "rb") as input_file:
-            # Call OpenAI Edit API
-            # Note: We use 'input_fidelity' if supported by the library/model, 
-            # but standard endpoint is straightforward.
-            # We request response_format="b64_json" to save directly.
             result = client.images.edit(
                 model="dall-e-2",
                 image=input_file,
                 prompt=prompt,
                 size=size,
                 n=1,
-                response_format="b64_json" 
+                response_format="b64_json"
             )
 
-        # Decode Base64
         image_base64 = result.data[0].b64_json
         image_bytes = base64.b64decode(image_base64)
 
-        # Save to Disk
         with open(output_path, "wb") as f:
             f.write(image_bytes)
-        
+
         return output_path
 
     except Exception as e:
         print(f"Error editing image with OpenAI: {e}")
         return None
 
-# --- TEXT HELPERS (Previously implemented) ---
+# --- TEXT HELPERS ---
+def clean_gpt_response(content):
+    """
+    Cleans markdown code blocks and extra quotes from GPT responses.
+    Ensures JSON parsing doesn't break due to ```json wrappers.
+    """
+    if not content:
+        return ""
+    
+    # Remove markdown code blocks (```json ... ```)
+    if "```" in content:
+        pattern = r"```(?:json)?\s*(.*?)\s*```"
+        match = re.search(pattern, content, re.DOTALL)
+        if match:
+            content = match.group(1)
+        else:
+            content = content.replace("```json", "").replace("```", "")
+
+    content = content.strip()
+    
+    # Remove surrounding quotes if they exist
+    if content.startswith('"') and content.endswith('"'):
+        content = content[1:-1]
+        
+    return content
+
 def prompt_gpt(prompt, temperature=0.6):
-    # Reuse previous logic or keep it here if preferred. 
-    # For now, content_prompts.py handles text, this handles images/structure.
-    # But we keep this simple helper if needed for other tasks.
+    """
+    Simple text generation helper with LOGGING and CLEANING.
+    """
     try:
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt}],
             temperature=temperature,
         )
-        content = response.choices[0].message.content.strip()
-        if content.startswith('"') and content.endswith('"'):
-            content = content[1:-1]
-        return content
+        content = response.choices[0].message.content
+
+        # --- LOGGING FOR DEBUGGING ---
+        print(f"\n--- [OPENAI LOG START] ---\n{content}\n--- [OPENAI LOG END] ---\n")
+        # -----------------------------
+
+        return clean_gpt_response(content)
     except Exception as e:
         print(f"GPT error: {e}")
         return None

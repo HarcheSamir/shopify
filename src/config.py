@@ -1,9 +1,10 @@
 import os
 from dotenv import load_dotenv
 
+# LOAD ENV VARS IMMEDIATELY
 load_dotenv()
 
-# Product Details (You can make these arguments in main.py later, but hardcoded for now as per notebook)
+# Product Details
 PRODUCT_TITLE = "Éclat Sublime – Crème Visage Hydratante Rose"
 PRODUCT_DESCRIPTION = """
 Une crème hydratante délicate, infusée d'extraits de rose et de vitamine E.

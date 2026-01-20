@@ -53,31 +53,26 @@ class ThemeManager:
         self.reviews_blocks = {}
         self.reviews_order = []
         raw_reviews = ai_content.get("NEW_THEME_MULTICOLUMN_REVIEWS_LIST", [])
-        
-        # Fallback if empty (shouldn't happen with updated mock)
-        if not raw_reviews:
-            print("   ⚠️ No reviews found in ai_content, using defaults.")
-            raw_reviews = [{"stars": "★★★★★", "review_headline": "Great", "review_body": "Amazing product", "author_info": "Customer"}] * 3
 
-        print(f"   -> Processing {len(raw_reviews)} reviews for injection...")
+        if not raw_reviews:
+            print("   ⚠️ No reviews found in ai_content, skipping injection.")
         
         for i, r in enumerate(raw_reviews[:6]):
             bid = f"review_{uuid.uuid4().hex[:8]}"
             self.reviews_order.append(bid)
-            
-            # SAFER HTML STRUCTURE: Use <p><strong> instead of <h1> to ensure visibility in standard RTE
+
             headline = r.get('review_headline', '')
             body = r.get('review_body', '')
             author = r.get('author_info', '')
             stars = r.get("stars", "★★★★★")
-            
+
             review_html = f"<p><strong>{headline}</strong></p><p>{body}</p><p><small>{author}</small></p>"
-            
+
             self.reviews_blocks[bid] = {
                 "type": "column",
                 "settings": {
                     "title": stars,
-                    "text": review_html, 
+                    "text": review_html,
                     "link_label": "",
                     "link": ""
                 }
@@ -88,11 +83,10 @@ class ThemeManager:
         comp_ids = ["testimonial_dPRTJq", "testimonial_EzR6nx"]
         raw_comp = ai_content.get("NEW_THEME_COMPARISON_LIST", [])
         for i, c in enumerate(raw_comp[:2]):
-            # Use safe get with defaults
             caption = c.get("caption", "Before/After")
             heading = c.get("testimonial_text", "Great result")
             author = c.get("author_info", "Verified")
-            
+
             self.comparison_data[comp_ids[i]] = {
                 "type": "testimonial",
                 "settings": {
@@ -116,10 +110,24 @@ class ThemeManager:
             }
 
     def cleanup_placeholders(self, content: str) -> str:
-        # Removes leftover placeholders to prevent ugly text on frontend
         content = re.sub(r'NEW_THEME_[A-Z0-9_]+', '', content)
         content = re.sub(r'NEW_[A-Z0-9_]+_CONTENT', '', content)
         return content
+
+    def escape_json_string(self, text: str) -> str:
+        """
+        CRITICAL FIX: Escapes double quotes and backslashes.
+        Prevents JSON corruption when AI text contains quotes.
+        """
+        if not text:
+            return ""
+        # 1. Remove surrounding quotes if OpenAI added them unnecessarily to the string itself
+        text_str = str(text).strip()
+        if text_str.startswith('"') and text_str.endswith('"') and len(text_str) > 1:
+            text_str = text_str[1:-1]
+            
+        # 2. Escape inner quotes and backslashes for JSON syntax
+        return text_str.replace('\\', '\\\\').replace('"', '\\"')
 
     def process_notebook_logic(self, workspace_path: str, ai_content: dict, images_map: dict, main_color: str, brand_name: str, product_handle:str):
         self.prepare_data(ai_content)
@@ -130,22 +138,29 @@ class ThemeManager:
         f_footer = os.path.join(workspace_path, "sections", "footer-group.json")
         f_contact = os.path.join(workspace_path, "templates", "page.contact.json")
 
+        # Helper to apply safe replacements
+        def apply_safe_replacements(content, keys_list):
+            for k in keys_list:
+                raw_val = ai_content.get(k, "")
+                safe_val = self.escape_json_string(raw_val)
+                content = content.replace(k, safe_val)
+            return content
+
         # 1. SETTINGS
         if os.path.exists(f_settings):
             with open(f_settings, 'r') as f: content = f.read()
             content = content.replace("NEW_THEME_PRIMARY_COLOR", main_color)
-            content = content.replace("NEW_THEME_BRAND_NAME", brand_name)
-            
-            # Handle Color Schemes
+            # Escape Brand Name
+            content = content.replace("NEW_THEME_BRAND_NAME", self.escape_json_string(brand_name))
+
             for k, v in ai_content.items():
                 if k.startswith("NEW_THEME_COLOR_SCHEME"):
                     content = content.replace(k, str(v))
-            
-            # Handle misc settings text
-            for k in ["NEW_THEME_SECONDARY_COLOR", "NEW_THEME_SECTION1_HEADING", "NEW_THEME_SECTION1_DESCRIPTION",
-                      "NEW_THEME_MAIN_TITLE_HERO_SLOGAN", "NEW_THEME_SECTION2_HEADING", "NEW_THEME_SECTION2_DESCRIPTION"]:
-                content = content.replace(k, str(ai_content.get(k, "")))
 
+            misc_keys = ["NEW_THEME_SECONDARY_COLOR", "NEW_THEME_SECTION1_HEADING", "NEW_THEME_SECTION1_DESCRIPTION",
+                      "NEW_THEME_MAIN_TITLE_HERO_SLOGAN", "NEW_THEME_SECTION2_HEADING", "NEW_THEME_SECTION2_DESCRIPTION"]
+            
+            content = apply_safe_replacements(content, misc_keys)
             content = self.cleanup_placeholders(content)
             with open(f_settings, 'w') as f: f.write(content)
 
@@ -160,7 +175,7 @@ class ThemeManager:
             replacement = f'"product": "{product_handle}"'
             content = re.sub(pattern, replacement, content)
 
-            # Inject Reviews (Blocks + Order)
+            # Inject Reviews & Order (These are already JSON strings, so don't escape)
             blocks_json = json.dumps(self.reviews_blocks, ensure_ascii=False)
             pattern_blocks = r'"blocks"\s*:\s*"NEW_THEME_MULTICOLUMN_REVIEWS_BLOCKS"'
             content = re.sub(pattern_blocks, lambda m: f'"blocks": {blocks_json}', content)
@@ -172,7 +187,7 @@ class ThemeManager:
             # Inject Comparison Data
             content = content.replace("NEW_THEME_COMPARISON_DATA", json.dumps(self.comparison_data, ensure_ascii=False))
 
-            # Inject All Text Keys
+            # Inject All Text Keys SAFELY
             text_keys = [
                 "NEW_THEME_INITIAL_REVIEW_TITLE", "NEW_THEME_INITIAL_REVIEW_SUBTITLE",
                 "NEW_THEME_ANNOUNCEMENT_TEXT1", "NEW_THEME_ANNOUNCEMENT_TEXT2",
@@ -194,15 +209,13 @@ class ThemeManager:
                 "NEW_NEED_HELP_CONTENT", "NEW_OUR_TEAM_IS_HERE_CONTENT", "NEW_CONTACT_US_BUTTON_CONTENT",
                 "NEW_FREE_SHIPPING_TEXT_CONTENT", "NEW_WATCH_DEMONSTRATION_CONTENT", "NEW_SEE_COLLECTION_BUTTON_CONTENT",
                 "NEW_GET_THIS_OFFER_BUTTON_CONTENT", "NEW_EXCELLENT_CONTENT", "NEW_PRODUCT_REVIEWS_HEADING_CONTENT",
-                "NEW_RATED_BY_CONTENT", "NEW_REVIEW_1_HOME_CONTENT", "NEW_REVIEW_2_HOME_CONTENT", 
+                "NEW_RATED_BY_CONTENT", "NEW_REVIEW_1_HOME_CONTENT", "NEW_REVIEW_2_HOME_CONTENT",
                 "NEW_REVIEW_3_HOME_CONTENT", "NEW_REVIEW_4_HOME_CONTENT"
             ]
-            for k in text_keys:
-                # Use raw string from ai_content, default to empty
-                val = str(ai_content.get(k, ""))
-                content = content.replace(k, val)
-                
-            content = content.replace("HERO_BUTTON_TEXT", str(ai_content.get("NEW_THEME_SUBTITLE_BUTTON_TEXT", "Shop Now")))
+            content = apply_safe_replacements(content, text_keys)
+
+            hero_btn = self.escape_json_string(ai_content.get("NEW_THEME_SUBTITLE_BUTTON_TEXT", "Shop Now"))
+            content = content.replace("HERO_BUTTON_TEXT", hero_btn)
 
             content = self.cleanup_placeholders(content)
             with open(f_index, 'w') as f: f.write(content)
@@ -211,7 +224,7 @@ class ThemeManager:
         if os.path.exists(f_product):
             with open(f_product, 'r') as f: content = f.read()
             content = content.replace("NEW_THEME_FAQ_DATA", json.dumps(self.faq_data, ensure_ascii=False))
-            
+
             p_keys = [
                 "NEW_THEME_WHAT_MAKES_OUR_PRODUCT_UNIQUE_TITLE", "NEW_THEME_PRODUCT_PAGE_IT1_TITLE",
                 "NEW_THEME_PRODUCT_PAGE_IT1_TEXT", "NEW_THEME_PRODUCT_PAGE_IT2_TITLE",
@@ -232,8 +245,7 @@ class ThemeManager:
                 "PRODUCT_SOLDOUT_TEXT", "PRODUCT_UNTRACKED_TEXT", "PRODUCT_LOW_ONE_TEXT", "PRODUCT_LOW_MANY_TEXT",
                 "PRODUCT_NORMAL_TEXT", "PRODUCT_SHARE_LABEL", "PRODUCT_OTHERS_LABEL", "PRODUCT_RELATED_HEADING"
             ]
-            for k in p_keys:
-                content = content.replace(k, str(ai_content.get(k, "")))
+            content = apply_safe_replacements(content, p_keys)
 
             content = self.cleanup_placeholders(content)
             with open(f_product, 'w') as f: f.write(content)
@@ -248,9 +260,7 @@ class ThemeManager:
                       "FOOTER_ANNOUNCEMENT_1", "FOOTER_ANNOUNCEMENT_2", "FOOTER_NEWSLETTER_HEADING",
                       "FOOTER_NEWSLETTER_SUBHEADING", "FOOTER_NEWSLETTER_PRIVACY_NOTE",
                       "FOOTER_GET_IN_TOUCH_TITLE", "FOOTER_GET_IN_TOUCH_DESCRIPTION"]
-            for k in f_keys:
-                content = content.replace(k, str(ai_content.get(k, "")))
-
+            content = apply_safe_replacements(content, f_keys)
             content = self.cleanup_placeholders(content)
             with open(f_footer, 'w') as f: f.write(content)
 
@@ -261,8 +271,7 @@ class ThemeManager:
                       "CONTACT_US_GET_IN_TOUCH_DESCRIPTION", "SUMMER_SALE_TRANSLATION", "SALE_BANNER_SUBHEADING",
                       "SHOP_SALE_NOW", "BUNDLE_AND_SALE_TRANSLATION", "BUNDLE_BANNER_SUBHEADING",
                       "SHOP_BUNDLE_TRANSLATION"]
-            for k in c_keys:
-                content = content.replace(k, str(ai_content.get(k, "")))
+            content = apply_safe_replacements(content, c_keys)
             content = content.replace("NEW_CONTACT_PAGE_IMAGE_BANNER", images_map.get("NEW_THEME_HERO_BANNER", ""))
 
             content = self.cleanup_placeholders(content)

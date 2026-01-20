@@ -10,6 +10,9 @@ from src.clients.openai_client import client
 # ==============================================================================
 
 def encode_image_to_base64(image_path: str) -> str:
+    """
+    Reads an image file and converts it to a Base64 string for API usage.
+    """
     try:
         with open(image_path, "rb") as image_file:
             return base64.b64encode(image_file.read()).decode('utf-8')
@@ -17,30 +20,45 @@ def encode_image_to_base64(image_path: str) -> str:
         return ""
 
 def hex_to_rgb(hex_color: str) -> tuple:
+    """
+    Converts hex string (e.g. #ffffff) to RGB tuple (255, 255, 255).
+    """
     hex_color = hex_color.lstrip('#')
     return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
 
 def calculate_luminance(rgb: tuple) -> float:
+    """
+    Calculates the relative luminance of a color to determine if it is light or dark.
+    Uses standard W3C formula.
+    """
     def linearize(channel):
         channel = channel / 255.0
         if channel <= 0.03928:
             return channel / 12.92
         else:
             return pow((channel + 0.055) / 1.055, 2.4)
+    
     r, g, b = rgb
     return 0.2126 * linearize(r) + 0.7152 * linearize(g) + 0.0722 * linearize(b)
 
 def is_dark_color(hex_color: str) -> bool:
+    """
+    Returns True if the color is considered dark (luminance < 0.18).
+    """
     try:
         rgb = hex_to_rgb(hex_color)
         luminance = calculate_luminance(rgb)
         return luminance < 0.18
     except:
-        return False # Assume light if invalid
+        # Fallback to assuming it's light if invalid hex
+        return False
 
 def enforce_text_color_rules(schema_json: dict, theme_color: str) -> dict:
     """
-    Post-process the schema to enforce strict text color rules WITH proper contrast.
+    Post-process the schema to enforce strict text color rules (Accessibility).
+    - Dark Background -> White Text
+    - Light Background -> Black Text
+    - Button Labels -> Contrast against Button Background
     """
     if "color_schemes" not in schema_json:
         return schema_json
@@ -62,10 +80,18 @@ def enforce_text_color_rules(schema_json: dict, theme_color: str) -> dict:
                 btn_bg = settings["button"]
                 if "button_label" in settings:
                     settings["button_label"] = "#ffffff" if is_dark_color(btn_bg) else "#000000"
+            
+            # 3. Secondary Button Labels (Outline buttons usually)
+            if "secondary_button_label" in settings:
+                # Usually matches text color
+                settings["secondary_button_label"] = settings["text"]
 
     return schema_json
 
 def clean_json_response(response_text: str) -> str:
+    """
+    Strips Markdown code blocks if present in GPT response.
+    """
     if "```json" in response_text:
         start_marker = "```json"
         end_marker = "```"
@@ -75,6 +101,7 @@ def clean_json_response(response_text: str) -> str:
             end_idx = response_text.find(end_marker, start_idx)
             if end_idx != -1:
                 response_text = response_text[start_idx:end_idx]
+    
     response_text = response_text.replace("```", "").strip()
     return response_text
 
@@ -89,12 +116,18 @@ def generate_new_color_schemas(
     index_json_path: str,
     images_folder_path: str
 ) -> str:
+    """
+    Generates a brand new color schema JSON using GPT-4o.
+    """
     
     # 1. Read Inputs
-    with open(index_json_path, 'r', encoding='utf-8') as f:
-        index_json_content = f.read()
+    try:
+        with open(index_json_path, 'r', encoding='utf-8') as f:
+            index_json_content = f.read()
+    except Exception:
+        index_json_content = "{}"
 
-    # 2. Prepare Images context (Take up to 3 generated images)
+    # 2. Prepare Images context (Take up to 3 generated images to inspire the AI)
     image_contents = []
     if os.path.exists(images_folder_path):
         valid_files = [f for f in os.listdir(images_folder_path) if f.lower().endswith(('.png', '.jpg'))]
@@ -118,21 +151,28 @@ def generate_new_color_schemas(
                 {
                     "type": "text",
                     "text": f"""
-Generate a new color schema JSON based on the original structure.
+You are an expert color designer for e-commerce themes. Generate a new color schema JSON based on the original schema, adapted to a new theme.
 
-ORIGINAL SCHEMA:
+ORIGINAL COLOR SCHEMAS (use this EXACT format for output, including all keys and structure):
 {original_color_schema}
 
 NEW PRIMARY COLOR: {theme_primary_color}
 THEME DESCRIPTION: {theme_description}
 
-RULES:
-1. ALL "text" fields must be strictly #000000 or #ffffff based on contrast.
-2. Do NOT use the primary color for body text.
-3. Use {theme_primary_color} for buttons, accents, and backgrounds.
-4. Maintain the exact JSON keys of the original.
+*** CRITICAL TEXT COLOR RULES - ABSOLUTE REQUIREMENT ***
 
-Return ONLY the JSON object.
+FOR ALL SCHEMES WITHOUT EXCEPTION:
+- ALL "text" fields MUST be ONLY #000000 (black) OR #ffffff (white).
+- NEVER use theme colors in "text" fields.
+- Choose based on background: light background = dark text (#000000), dark background = light text (#ffffff).
+
+OTHER COLORS (backgrounds, buttons, gradients):
+- Use {theme_primary_color} for buttons, accents, and backgrounds.
+- Create vibrant, cohesive palette matching theme description and images.
+
+STRUCTURE REQUIREMENTS:
+- Keep ALL existing scheme names exactly the same.
+- Return ONLY the JSON object.
 """
                 }
             ] + image_contents
@@ -140,12 +180,19 @@ Return ONLY the JSON object.
     ]
 
     try:
+        # Call GPT-4o with JSON Object enforcement
         response = client.chat.completions.create(
             model="gpt-4o",
             messages=messages,
             temperature=0.1,
-            max_tokens=3000
+            max_tokens=3000,
+            response_format={"type": "json_object"}
         )
+        
+        # CRITICAL FIX: Check for None content to prevent crash
+        if not response.choices[0].message.content:
+            raise ValueError("OpenAI returned empty content")
+
         raw_text = response.choices[0].message.content.strip()
         clean_text = clean_json_response(raw_text)
         
@@ -162,9 +209,10 @@ Return ONLY the JSON object.
 
 def fix_color_schema(json_string):
     """
-    Sanitizes JSON string if GPT messed up syntax.
+    Sanitizes JSON string if formatting is slightly off.
     """
     try:
+        # Try round trip to normalize formatting
         return json.dumps(json.loads(json_string), indent=2)
     except:
         return json_string
@@ -175,9 +223,12 @@ def fix_color_schema(json_string):
 
 class ShopifyColorSchemeOptimizer:
     def __init__(self):
-        pass # Client is global
+        pass 
 
     def extract_color_schemes(self, color_schemas: dict) -> dict:
+        """
+        Parses available schemes to know which are dark/light.
+        """
         schemes = {}
         for name, data in color_schemas.get("color_schemes", {}).items():
             s = data.get("settings", {})
@@ -191,63 +242,56 @@ class ShopifyColorSchemeOptimizer:
     def optimize_theme_colors(self, color_schemas: str, json_file_path: str, images_folder: str):
         """
         Modifies index.json or product.json IN PLACE to use the best color scheme
-        for each section based on the image inside it.
+        for each section.
         """
         print(f"🎨 Optimizing colors for {os.path.basename(json_file_path)}...")
         
         try:
-            schemas_json = json.loads(color_schemas)
+            # Load the current template
             with open(json_file_path, 'r', encoding='utf-8') as f:
                 template_data = json.load(f)
+            
+            # We apply a logical heuristic optimization.
+            # We assign different schemes to break up the page visually.
+            
+            if "sections" in template_data:
+                keys = list(template_data["sections"].keys())
+                
+                for i, section_id in enumerate(keys):
+                    section = template_data["sections"][section_id]
+                    sType = section.get("type", "")
+                    
+                    new_scheme = None
+                    
+                    # Logic: Alternating or Specific based on type
+                    if sType == "image-banner":
+                        # Hero Banner -> Usually transparent or Scheme 1
+                        new_scheme = "background-1"
+                    elif sType == "rich-text":
+                        # Text block -> Use Accent scheme for emphasis
+                        new_scheme = "accent-1" 
+                    elif sType == "multicolumn":
+                        # Columns -> Standard background
+                        new_scheme = "background-1"
+                    elif sType == "image-with-text":
+                        # Split -> Inverse for style
+                        new_scheme = "inverse"
+                    elif sType == "featured-collection":
+                        new_scheme = "background-1"
+                    
+                    # Apply if valid
+                    if new_scheme:
+                        if "settings" in section:
+                            # Only update if color_scheme key exists
+                            if "color_scheme" in section["settings"]:
+                                section["settings"]["color_scheme"] = new_scheme
+                            # Some themes use color_scheme_1
+                            elif "color_scheme_1" in section["settings"]:
+                                section["settings"]["color_scheme_1"] = new_scheme
+
+            # Save back the optimized file
+            with open(json_file_path, 'w', encoding='utf-8') as f:
+                json.dump(template_data, f, indent=2)
+                
         except Exception as e:
             print(f"❌ Failed to load JSON for optimization: {e}")
-            return
-
-        # 1. Find images used in this template
-        # In our pipeline, we mapped Placeholders -> Local Paths in 'images_map'
-        # But here we just look at the folder content and guess placeholders
-        # or we just iterate sections and look for "NEW_THEME_..." keys.
-        
-        # NOTE: Since we already replaced placeholders in main.py BEFORE calling this,
-        # the template file now contains "shopify://..." or "mock_...".
-        # This makes it hard to map back to local files for analysis.
-        
-        # STRATEGY: We skip the heavy image analysis for this version to ensure stability,
-        # OR we rely on a simplified logic: 
-        # "If section has 'image-banner', use Inverse scheme".
-        
-        # For strict fidelity to the notebook, we would need the mapping of Section ID -> Image Path.
-        # Given the complexity of re-mapping applied changes, we will implement a 
-        # Logical Heuristic optimization instead of Visual Analysis for this step.
-        
-        # However, to be 100% faithful to the notebook's INTENT (intelligent assignment):
-        available_schemes = self.extract_color_schemes(schemas_json)
-        
-        # We will iterate sections and assign alternating schemes for visual variety
-        # unless it's a Hero (Banner), which gets special treatment.
-        
-        if "sections" in template_data:
-            keys = list(template_data["sections"].keys())
-            for i, section_id in enumerate(keys):
-                section = template_data["sections"][section_id]
-                sType = section.get("type", "")
-                
-                # Default Assignments
-                if sType == "image-banner":
-                    # Hero usually needs transparent or specific scheme
-                    new_scheme = "background-1"
-                elif sType == "rich-text":
-                    new_scheme = "background-2" # Contrast
-                elif sType == "multicolumn":
-                    new_scheme = "background-1"
-                else:
-                    continue # Skip
-                
-                # Apply
-                if "settings" in section and "color_scheme" in section["settings"]:
-                    section["settings"]["color_scheme"] = new_scheme
-                    # print(f"   -> Assigned {new_scheme} to {sType}")
-
-        # Save back
-        with open(json_file_path, 'w', encoding='utf-8') as f:
-            json.dump(template_data, f, indent=2)

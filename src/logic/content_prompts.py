@@ -1,31 +1,6 @@
 import json
 import re
-from src.clients.openai_client import client
-
-def prompt_gpt(prompt, temperature=0.6):
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=temperature,
-        )
-        content = response.choices[0].message.content.strip()
-        if content.startswith('"') and content.endswith('"'):
-            content = content[1:-1]
-        return content
-    except Exception as e:
-        print(f"GPT error: {e}")
-        return None
-
-# --- RESTORED MAIN CONTENT FUNCTION ---
-def get_new_theme_content(product_title, product_description, language):
-    """
-    Retrieves the main JSON structure for the theme (Hero, Features, etc.).
-    """
-    # NOTE: This uses the massive prompt logic. 
-    # We will fully implement the prompt text in Phase 2/3 when we need the DeepSeek structure.
-    # For now, it returns an empty dict to prevent ImportErrors.
-    return {}
+from src.clients.openai_client import client, prompt_gpt, clean_gpt_response
 
 # --- BASIC TEXT GENERATORS ---
 
@@ -80,7 +55,6 @@ def generate_alternative_slogan_prompt(product_title, product_description, exist
     return prompt_gpt(prompt)
 
 def generate_highlight_prompt(language, product_name, product_description):
-    # Fixed escape sequence by using raw string
     prompt = f"""
 You are a professional copywriter. Write a single paragraph in {language} inside <p>...</p> tags.
 The text should:
@@ -109,31 +83,12 @@ The text should:
 def translate_text(text, target_language):
     """Simple translation function - returns only translated text"""
     prompt = f"Translate to {target_language}. Return only the translation, no explanations , IF THE THE Input text has HTML tags like <br> or <p> or any keep them and translate the text and return if no html return just the text : {text}"
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.3,
-        )
-        return response.choices[0].message.content.strip().replace('"',"")
-    except Exception as e:
-        print(f"Translation error: {e}")
-        return text
+    return prompt_gpt(prompt, temperature=0.3)
 
 def translate_benefits(content, target_language):
     """Translate benefits content to target language"""
-    # Fixed escape sequence with raw string r""
     prompt = r"Translate this HTML content to {target_language}. Return only the translated text with the same HTML structure with the <pr> and <br\/> tags. Do not add any explanations or additional text:\n\n{content}".format(target_language=target_language, content=content)
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.3,
-        )
-        return response.choices[0].message.content.strip().replace('"',"")
-    except Exception as e:
-        print(f"Error translating benefits: {e}")
-        return content
+    return prompt_gpt(prompt, temperature=0.3)
 
 # --- COMPLEX JSON GENERATORS ---
 
@@ -151,104 +106,85 @@ Requirements:
   "Answer": "<p>The answer</p>"
 - Do NOT add extra text or commentary. Only valid JSON.
     """
-
+    
     try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.6,
-        )
-        raw_text = response.choices[0].message.content.strip()
-
-        try:
-            qna_data = json.loads(raw_text)
-        except json.JSONDecodeError:
-            start = raw_text.find("[")
-            end = raw_text.rfind("]") + 1
-            if start != -1 and end != -1:
-                raw_text = raw_text[start:end]
-                try:
-                    qna_data = json.loads(raw_text)
-                except:
-                    return []
-            else:
-                return []
-
-        if not isinstance(qna_data, list) or len(qna_data) != 4:
-            return []
-
-        return qna_data
-
+        raw_text = prompt_gpt(prompt)
+        # prompt_gpt already calls clean_gpt_response, so we just load it
+        return json.loads(raw_text)
     except Exception as e:
         print(f"Error generating Q&A: {e}")
         return []
 
-def get_valid_reviews(product_title, product_description, language, max_retries=5):
+def get_valid_reviews(product_title, product_description, language, max_retries=3):
+    """
+    Asks GPT for a JSON array of reviews directly.
+    NO FALLBACKS: Raises error if fails.
+    """
     prompt = f"""
-Generate 4 unique product reviews in {language} for the product '{product_title}'.
-Product details: {product_description}.
-Each review must follow exactly this HTML structure:
+    Generate 6 unique product reviews in {language} for the product '{product_title}'.
+    Product details: {product_description}.
+    
+    Return a STRICT JSON ARRAY of objects. Each object must have these keys:
+    - "stars": string (e.g. "★★★★★" or "★★★★☆")
+    - "review_headline": string (Short title)
+    - "review_body": string (2-3 sentences)
+    - "author_info": string (Name, City)
 
-<h2>Review Title</h2><p></p><p>Review content here</p><h6><strong>Reviewer Name, City</strong></h6>
-
-Return the reviews as a single JSON object with keys review_1, review_2, review_3, and review_4.
-The value for each key must be the full HTML string for the review.
-Do not add explanations or extra text.
-"""
+    Example format:
+    [
+      {{
+        "stars": "★★★★★",
+        "review_headline": "Super!",
+        "review_body": "I loved it.",
+        "author_info": "Paul, London"
+      }}
+    ]
+    Do not add any markdown formatting or text outside the JSON.
+    """
 
     for attempt in range(max_retries):
         result = prompt_gpt(prompt)
         try:
+            # prompt_gpt cleans the markdown now
             data = json.loads(result)
-            if (isinstance(data, dict) and len(data) == 4):
-                return data
-        except json.JSONDecodeError:
-            try:
-                review_pattern = r'review_(\d+):\s*(<h2>.*?</h6>)'
-                matches = re.findall(review_pattern, result, re.DOTALL)
-                if len(matches) == 4:
-                    data = {}
-                    for review_num, review_content in matches:
-                        data[f"review_{review_num}"] = review_content.strip()
+            
+            if isinstance(data, list) and len(data) > 0:
+                # Basic validation
+                if "review_headline" in data[0]:
                     return data
-            except Exception:
-                pass
-    return {}
-
-def fix_json_format(response: str) -> str:
-    match = re.search(r'\{.*\}', response, re.DOTALL)
-    if match:
-        response = match.group(0)
-    response = re.sub(r'pros_store_(\d+):\s*([^,\n}]+)', r'"pros_store_\1": "\2"', response)
-    response = response.replace('.,', ',')
-    response = response.replace('.}', '}')
-    return response
+        except json.JSONDecodeError:
+            print(f"   ⚠️ Review generation JSON error (Attempt {attempt+1})")
+            continue
+            
+    # If we get here, it failed. Raise error to stop script.
+    raise Exception("❌ FAILED to generate valid JSON Reviews after 3 attempts. Stopping to prevent bad data.")
 
 def get_pros_json(product_title, product_description, language):
+    """
+    Asks GPT for a simple JSON list of 5 short benefits.
+    NO FALLBACKS: Raises error if fails.
+    """
     prompt = f"""
-You are given the following product information:
-Title: {product_title}
-Description: {product_description}
-
-Generate exactly 5 pros of this product in {language}.
-Output MUST be valid JSON only, no explanations, no extra text.
-Keys must be: pros_store_1, pros_store_2, pros_store_3, pros_store_4, pros_store_5.
-"""
-    current_prompt = prompt
+    Generate exactly 5 short key benefits (pros) for: {product_title} in {language}.
+    Return ONLY a JSON Array of strings.
+    Example: ["Fast Shipping", "Eco-friendly", "Durable", "Soft", "Cheap"]
+    """
+    
     for attempt in range(3):
-        response = prompt_gpt(current_prompt)
+        response = prompt_gpt(prompt)
         try:
             data = json.loads(response)
-            if all(f"pros_store_{i}" in data for i in range(1, 6)):
-                return data
-        except json.JSONDecodeError:
-            try:
-                fixed = fix_json_format(response)
-                data = json.loads(fixed)
-                if all(f"pros_store_{i}" in data for i in range(1, 6)):
-                    return data
-            except:
-                pass
-        if attempt == 0: current_prompt += '\nIMPORTANT: Return ONLY valid JSON with quoted keys.'
-        elif attempt == 1: current_prompt += '\nEnsure all property names are in double quotes.'
-    return {}
+            
+            if isinstance(data, list) and len(data) >= 5:
+                return {
+                    "pros_store_1": data[0],
+                    "pros_store_2": data[1],
+                    "pros_store_3": data[2],
+                    "pros_store_4": data[3],
+                    "pros_store_5": data[4]
+                }
+        except Exception:
+            pass
+            
+    # If we get here, it failed. Raise error to stop script.
+    raise Exception("❌ FAILED to generate valid JSON Pros after 3 attempts. Stopping to prevent bad data.")
