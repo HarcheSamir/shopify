@@ -33,7 +33,7 @@ SHOP_NAME = SHOPIFY_STORE_URL.split('.')[0] if SHOPIFY_STORE_URL else ""
 
 # Paths
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-ASSETS_DIR = os.path.join(BASE_DIR, "assets", "base-theme")
+ASSETS_DIR = os.path.join(BASE_DIR, "assets", "shopify-template")
 OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 TEMP_DIR = os.path.join(BASE_DIR, "temp_theme_build")
 

@@ -6,6 +6,7 @@ __pycache__/
 venv/
 env/
 ENV/
+temp_theme_build/
 # Environment
 .env
 test

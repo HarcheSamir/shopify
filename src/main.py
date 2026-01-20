@@ -43,7 +43,7 @@ def main():
     # Paths
     BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
     PROJECT_ROOT = os.path.dirname(BASE_DIR)              
-    BASE_THEME_PATH = os.path.join(PROJECT_ROOT, "assets", "base-theme")
+    BASE_THEME_PATH = os.path.join(PROJECT_ROOT, "assets", "shopify-template")
     TEMP_DIR = os.path.join(PROJECT_ROOT, "temp_theme_build")
     
     if os.path.exists(TEMP_DIR): shutil.rmtree(TEMP_DIR)

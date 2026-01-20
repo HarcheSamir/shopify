@@ -27,7 +27,7 @@ class ThemeManager:
 
         # --- CRITICAL FIX: Use the correct files from root ---
         # The files inside new-new/templates are outdated/wrong. 
-        # We overwrite them with the ones from assets/base-theme/
+        # We overwrite them with the ones from assets/shopify-template/
         files_to_repair = {
             "index.json": "templates",
             "product.json": "templates",
@@ -44,9 +44,9 @@ class ThemeManager:
             if os.path.exists(loose_source):
                 os.makedirs(os.path.dirname(dest_file_path), exist_ok=True)
                 shutil.copy(loose_source, dest_file_path)
-                print(f"   -> Overwrote {fname} from base-theme root")
+                print(f"   -> Overwrote {fname} from shopify-template root")
             else:
-                print(f"   ⚠️ Warning: Could not find {fname} in base-theme root")
+                print(f"   ⚠️ Warning: Could not find {fname} in shopify-template root")
 
         return workspace_path
 
