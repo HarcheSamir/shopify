@@ -1,25 +1,38 @@
 # src/mocks/data_payloads.py
 
 MOCK_THEME_CONTENT = {
-    # --- Identity & Hero ---
+    # --- Identity & Hero (DeepSeek & Granular Slogans) ---
     "NEW_THEME_BRAND_NAME": "Luminelle Beauty",
     "NEW_THEME_MAIN_TITLE_HERO_SLOGAN": "Éclat Sublime : La Révolution Rose",
     "NEW_THEME_SUBTITLE_HERO": "Une hydratation intense infusée d'extraits de rose pour une peau radieuse et rajeunie.",
     "NEW_THEME_SUBTITLE_BUTTON_TEXT": "Découvrir la Collection",
     "NEW_THEME_MAIN_TITLE_FEATURE": "L'Essence de la Beauté",
     "NEW_THEME_TEXT_FEATURE": "Notre formule exclusive combine la puissance de la vitamine E et la douceur de la rose pour revitaliser votre peau en profondeur.",
+
+    # --- GRANULAR: Slogans & CTA ---
+    "NEW_BRAND_SLOGAN_CONTENT": "Révélez votre lumière intérieure.",
+    "NEW_SECOND_SLOGAN_CONTENT": "La nature au service de votre peau.",
+    "NEW_PRODUCT_BLURB_CONTENT": "Luxe quotidien pour une peau éclatante.",
+    "NEW_CTA_HERO_BUTTON_CONTENT": "Acheter",
     
+    # --- GRANULAR: Product Descriptions ---
+    "NEW_PRODUCT_DESCRIPTION_1_CONTENT": "Découvrez l'hydratation ultime avec notre crème à la rose. Une texture soyeuse qui pénètre instantanément pour un confort absolu.",
+    "NEW_PRODUCT_HEADING_1_CONTENT": "Hydratation Pure & Efficace",
+    "NEW_HIGHLIGHT_PRODUCT_FEATURES_CONTENT": "<p>✨ <b>Hydratation 24H</b> | 🌹 <b>Extraits de Rose</b> | 💧 <b>Vitamine E</b> | 🐰 <b>Cruelty-Free</b></p>",
+
     # --- Video Section ---
     "NEW_THEME_MAIN_TITLE_VIDEO": "Rituel Sensoriel",
     "NEW_THEME_VIDEO_DESCRIPTION": "Regardez comment notre crème transforme votre routine quotidienne en un moment de pur luxe.",
     "NEW_THEME_VIDEO_BUTTON_TEXT": "Voir la vidéo",
-    
+    # Granular Video Text
+    "NEW_PARAGRAPH_PRODUCT_TEXT_VIDEO": "Plongez dans une expérience sensorielle unique. Chaque application est une caresse de fraîcheur qui réveille l'éclat naturel de votre visage.",
+    "NEW_HEADING_PRODUCT_TEXT_VIDEO": "Une Expérience Immersive",
+
     # --- Product Highlights ---
     "NEW_THEME_PRODUCT_SHOWCASE_REVIEW": "Ma peau n'a jamais été aussi douce. C'est un véritable miracle en pot.",
     "NEW_THEME_PRODUCT_IMAGE_CAPTION_1": "Hydratation 24H",
     "NEW_THEME_PRODUCT_IMAGE_CAPTION_2": "Éclat Naturel",
-    "NEW_THEME_PRODUCT_BLURB_CONTENT": "Le secret d'une peau lumineuse.",
-    
+
     # --- Comparison Table ---
     "NEW_THEME_TABLE_COMPARISON_WHY": "Pourquoi Luminelle ?",
     "NEW_THEME_COMPARISON_TABLE_WHY_OUR_PRODUCT": "Luminelle Beauty",
@@ -32,6 +45,9 @@ MOCK_THEME_CONTENT = {
         "Satisfait ou Remboursé"
     ],
 
+    # --- GRANULAR: Why Choose Us (Brand Text) ---
+    "NEW_WHY_CHOOSE_US_BRAND_TEXT_CONTENT": "<p>⭐ Choisir <b>Luminelle</b>, c'est choisir l'excellence. Nous allions science et nature pour des résultats visibles sans compromis sur la sensorialité.</p>",
+
     # --- Product Page Specifics ---
     "NEW_THEME_VIDEO_TEXT_HEADING_PRODUCT_PAGE": "Application Parfaite",
     "NEW_THEME_VIDEO_TEXT_TEXT_PRODUCT_PAGE": "Massez doucement sur le visage et le cou matin et soir pour des résultats optimaux.",
@@ -40,7 +56,24 @@ MOCK_THEME_CONTENT = {
     "NEW_THEME_PRODUCT_PAGE_IT2_TITLE": "Parfum",
     "NEW_THEME_PRODUCT_PAGE_IT2_TEXT": "Notes subtiles de rose fraîchement coupée.",
 
-    # --- Reviews ---
+    # --- GRANULAR: PROS ---
+    "NEW_PROS_1_CONTENT": "Hydratation Intense",
+    "NEW_PROS_2_CONTENT": "Texture Non-Grasse",
+    "NEW_PROS_3_CONTENT": "Parfum Délicat",
+    "NEW_PROS_4_CONTENT": "Ingrédients Naturels",
+    "NEW_PROS_5_CONTENT": "Emballage Recyclable",
+
+    # --- GRANULAR: Q&A (FAQ Section on Product Page) ---
+    "NEW_THEME_FAQ_HEADING_1": "Quelle est la durée de conservation ?",
+    "NEW_THEME_FAQ_CONTENT_1": "<p>Notre crème se conserve 12 mois après ouverture.</p>",
+    "NEW_THEME_FAQ_HEADING_2": "Est-ce compatible avec le maquillage ?",
+    "NEW_THEME_FAQ_CONTENT_2": "<p>Oui, c'est une excellente base de maquillage.</p>",
+    "NEW_THEME_FAQ_HEADING_3": "Quels sont les délais de livraison ?",
+    "NEW_THEME_FAQ_CONTENT_3": "<p>Nous livrons en 2-4 jours ouvrés.</p>",
+    "NEW_THEME_FAQ_HEADING_4": "Acceptez-vous les retours ?",
+    "NEW_THEME_FAQ_CONTENT_4": "<p>Oui, vous avez 30 jours pour changer d'avis.</p>",
+
+    # --- Reviews (Multicolumn Section - DeepSeek) ---
     "NEW_THEME_REVIEWS_SECTION_HEADLINE": "Elles l'adorent",
     "NEW_THEME_CUSTOMERS_REVIEW_TEXT_DESCRIPTION": "Rejoignez plus de 15 000 clientes satisfaites.",
     "NEW_THEME_MULTICOLUMN_REVIEWS_LIST": [
@@ -82,6 +115,12 @@ MOCK_THEME_CONTENT = {
         }
     ],
 
+    # --- GRANULAR: Reviews (Home Page - HTML Format) ---
+    "NEW_REVIEW_1_HOME_CONTENT": "<h2>Peau Transformée</h2><p></p><p>Ma peau est radieuse depuis que j'utilise cette crème. Un must-have !</p><h6><strong>Camille T., Nantes</strong></h6>",
+    "NEW_REVIEW_2_HOME_CONTENT": "<h2>Texture Rêvée</h2><p></p><p>Elle ne colle pas et sent divinement bon. Je recommande à 100%.</p><h6><strong>Sarah L., Strasbourg</strong></h6>",
+    "NEW_REVIEW_3_HOME_CONTENT": "<h2>Livraison Top</h2><p></p><p>Reçu en 48h dans un emballage soigné. Produit conforme.</p><h6><strong>Elodie P., Nice</strong></h6>",
+    "NEW_REVIEW_4_HOME_CONTENT": "<h2>Efficacité Réelle</h2><p></p><p>Mes rougeurs ont disparu. Merci Luminelle !</p><h6><strong>Manon D., Rennes</strong></h6>",
+
     # --- Comparison / Testimonials ---
     "NEW_THEME_COMPARISON_LIST": [
         {
@@ -96,7 +135,7 @@ MOCK_THEME_CONTENT = {
         }
     ],
 
-    # --- FAQ ---
+    # --- FAQ (DeepSeek List) ---
     "NEW_THEME_FAQ_LIST": [
         {
             "question": "Convient-elle aux peaux sensibles ?",
@@ -195,3 +234,20 @@ MOCK_IMAGES = {
     "NEW_THEME_PRODUCT_SHOWCASE_IMAGE_2": "https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=800&q=80",
     "NEW_THEME_IMAGE_LUMIN_GRID_1": "https://images.unsplash.com/photo-1608248597279-f99d160bfbc8?auto=format&fit=crop&w=800&q=80"
 }
+
+# Simple About Us HTML for Mock
+MOCK_ABOUT_US_HTML = """
+<div class="section-template--custom-about-padding">
+    <div class="about-text" style="max-width:1000px;margin:0 auto;text-align:center;padding:60px 20px;">
+        <h2 style="font-size:3.2rem;font-weight:800;margin-bottom:30px;line-height:1.2;">
+            À propos <span style="color:#EFB7C6;">Luminelle Beauty</span>
+        </h2>
+        <p style="font-size:1.8rem;line-height:2.2;margin-bottom:30px;">
+            Chez <strong>Luminelle Beauty</strong>, nous sommes passionnés par la création de soins exceptionnels.
+        </p>
+        <p style="font-size:2rem;line-height:2.4;font-weight:700;">
+            L'excellence est notre standard.
+        </p>
+    </div>
+</div>
+"""
